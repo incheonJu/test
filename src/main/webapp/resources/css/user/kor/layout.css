@@ -1,0 +1,43 @@
+@charset "utf-8";
+
+/********** 레이아웃 CSS **********/
+#wrap{position:relative; width:100%;min-width:1000px;}
+#container{ margin:0 auto;}
+
+/* Header */
+#headerWr{width:100%;position:absolute;left:0;top:0;z-index:10;background: url('/resources/image/user/kor/common/header/bg_header01.gif') repeat-x 0 103px;}
+#headerWr .topWrap{background:#fff url('/resources/image/user/kor/common/header/bg_header01.gif') repeat-x 0 103px;}
+#headerWr.on .topWrap{background-position: 0 104px;}
+#headerWr .header{position:relative; width:980px; margin:0 auto; padding-top:20px; min-height:84px}
+
+/* TITLE */
+#titleWr{text-align:center;height:100px;background-color:#fff;}
+#titleWr h2{line-height:100px;*line-height:90px;font-size:40px;color:#000;font-weight:700;letter-spacing:10px;}
+
+/* CONTENT */
+#container{position:relative; margin:0 auto; padding-top:334px; z-index:5;}
+#container:after{clear:both; content:''; display:block;}
+
+/* LOCATION */
+#location{background-color:#e4e4e4;height:49px;font-size:14px;line-height:49px;}
+#location .inner{width:980px;margin:0 auto;}
+#location span,
+#location strong{display: inline-block;padding: 0 0 0 29px;background: url('/resources/image/user/kor/common/icon/blt_location_arrow.gif') no-repeat 3px 50%;margin-left:20px;}
+#location a{font-size:14px;line-height:49px;}
+#location .home{background:none;margin-left:0;padding-left:0;}
+#location .dep02 a{color: #333;font-weight:400;}
+
+/* FOOTER */
+#footer{background-color:#444442;height:123px; position:relative; z-index:99;}
+#footer:after{clear:both; content:''; display:block;}
+#footer .footerWrap{position:relative; width:980px; margin:0 auto;}
+
+/* SUB - CONTENT */
+#content{background-color:#f7f7f7;min-height:410px;padding-bottom:100px;}
+#content .contentWrap{width:980px; margin:0 auto;padding-top:80px;position:relative;}
+#content .sub_line{clear:both; margin:0 0 8px; background:url('/resources/image/user/kor/common/icon/sub_line3.gif') no-repeat 0 bottom; height:53px}
+#content .titleWrap {height:290px; *zoom:1;}
+#content .titleWrap:after {content:" ";display:block;clear:both;height:0;visibility:hidden;}
+
+
+
