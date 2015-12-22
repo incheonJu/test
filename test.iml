@@ -7,30 +7,9 @@
           <file>file://$MODULE_DIR$/src/main/java/com/eip/template/config/AdminServletConfig.java</file>
           <file>file://$MODULE_DIR$/src/main/java/com/eip/template/config/DataConfig.java</file>
           <file>file://$MODULE_DIR$/src/main/java/com/eip/template/config/RootConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/eip/template/config/SecurityConfig.java</file>
           <file>file://$MODULE_DIR$/src/main/java/com/eip/template/config/TilesConfig.java</file>
         </fileset>
-      </configuration>
-    </facet>
-    <facet type="JRebel" name="JRebel">
-      <configuration>
-        <option name="autosync" value="false" />
-        <option name="deleteUnindexed" value="true" />
-        <option name="httpAuthEnabled" value="false" />
-        <option name="httpPassword" />
-        <option name="httpUsername" />
-        <option name="ideModuleStorage">
-          <map>
-            <entry key="com.zeroturnaround.jrebel.intellij.remoting.Remote2ModuleSpecificServerMigrationCompleted" value="true" />
-            <entry key="com.zeroturnaround.jrebel.remoting.ModuleSpecificSingleRemoteServer" value="{&quot;useHttpBasicAuthentication&quot;:&quot;false&quot;,&quot;deleteFilesOnServer&quot;:&quot;true&quot;,&quot;syncEnabled&quot;:&quot;false&quot;,&quot;httpBasicAuthenticationPassword&quot;:&quot;&quot;,&quot;httpBasicAuthenticationUser&quot;:&quot;&quot;,&quot;useServerAuthentication&quot;:&quot;false&quot;,&quot;serverAuthenticationPassword&quot;:&quot;&quot;}" />
-          </map>
-        </option>
-        <option name="manualXML" value="false" />
-        <option name="masterModuleName" />
-        <option name="remotingEnabled" value="false" />
-        <option name="scanAllFiles" value="false" />
-        <option name="secure" value="true" />
-        <option name="url" />
-        <option name="xmlDir" />
       </configuration>
     </facet>
     <facet type="web" name="Web">
@@ -59,6 +38,11 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: javax.servlet:javax.servlet-api:3.1.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: javax.websocket:javax.websocket-api:1.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: javax.servlet:jsp-api:2.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.apache.tomcat:tomcat-servlet-api:7.0.47" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: javax.servlet:servlet-api:2.4" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.springframework:spring-webmvc:4.2.1.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.springframework:spring-core:4.2.1.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.springframework:spring-aop:4.2.1.RELEASE" level="project" />
@@ -72,9 +56,11 @@
     <orderEntry type="library" exported="" name="Gradle: org.springframework.security:spring-security-config:4.0.2.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.hibernate:hibernate-core:5.0.1.Final" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.hibernate:hibernate-entitymanager:5.0.1.Final" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: javax.servlet:javax.servlet-api:3.1.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: jstl:jstl:1.2" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: javax.servlet:jstl:1.2" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.6.2" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.apache.poi:poi:3.9" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.sun.mail:javax.mail:1.4.4" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.springframework.security:spring-security-taglibs:4.0.2.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.apache.tiles:tiles-extras:3.0.5" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.apache.tiles:tiles-jsp:3.0.5" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.apache.tiles:tiles-servlet:3.0.5" level="project" />
@@ -83,15 +69,16 @@
     <orderEntry type="library" exported="" name="Gradle: junit:junit:4.12" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.flywaydb:flyway-maven-plugin:3.2.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.zaxxer:HikariCP:2.4.1" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: ch.qos.logback:logback-core:1.0.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: ch.qos.logback:logback-classic:1.0.0" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: ch.qos.logback:logback-classic:1.1.2" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: ch.qos.logback:logback-core:1.1.2" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.codehaus.janino:janino:2.7.7" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.springframework:spring-expression:4.2.1.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Gradle: commons-logging:commons-logging:1.2" level="project" />
     <orderEntry type="library" exported="" name="Gradle: aopalliance:aopalliance:1.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.springframework.data:spring-data-commons:1.11.0.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.springframework:spring-orm:4.1.7.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.aspectj:aspectjrt:1.8.6" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.slf4j:slf4j-api:1.7.12" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.slf4j:jcl-over-slf4j:1.7.12" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.jboss.logging:jboss-logging:3.3.0.Final" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.apache.geronimo.specs:geronimo-jta_1.1_spec:1.1.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final" level="project" />
@@ -102,6 +89,9 @@
     <orderEntry type="library" exported="" name="Gradle: org.hibernate.common:hibernate-commons-annotations:5.0.0.Final" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.6.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.6.2" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: commons-codec:commons-codec:1.5" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: javax.activation:activation:1.1" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.springframework.security:spring-security-acl:4.0.2.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.apache.tiles:tiles-core:3.0.5" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.apache.tiles:tiles-request-servlet-wildcard:1.0.6" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.apache.tiles:tiles-request-mustache:1.0.6" level="project" />
@@ -125,6 +115,7 @@
     <orderEntry type="library" exported="" name="Gradle: org.sonatype.plexus:plexus-sec-dispatcher:1.4" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.codehaus.plexus:plexus-utils:1.5.15" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.flywaydb:flyway-core:3.2.1" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.codehaus.janino:commons-compiler:2.7.7" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.springframework:spring-jdbc:4.1.7.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Gradle: xml-apis:xml-apis:1.0.b2" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.apache.tiles:tiles-api:3.0.5" level="project" />
@@ -177,13 +168,12 @@
     <orderEntry type="library" exported="" name="Gradle: nekohtml:nekohtml:1.9.6.2" level="project" />
     <orderEntry type="library" exported="" name="Gradle: commons-httpclient:commons-httpclient:3.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.apache.jackrabbit:jackrabbit-jcr-commons:1.5.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.slf4j:jcl-over-slf4j:1.7.12" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.slf4j:slf4j-api:1.7.12" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.sonatype.plexus:plexus-cipher:1.4" level="project" />
     <orderEntry type="library" exported="" name="Gradle: commons-collections:commons-collections:3.2.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.codehaus.plexus:plexus-container-default:1.0-alpha-30" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.codehaus.plexus:plexus-classworlds:1.2-alpha-9" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.codehaus.plexus:plexus-interactivity-api:1.0-alpha-6" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.codehaus.plexus:plexus-component-api:1.0-alpha-16" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: commons-codec:commons-codec:1.2" level="project" />
   </component>
 </module>

@@ -32,7 +32,7 @@ public enum Message
     private String code;
     private String message;
     
-    Message(String code, String message)
+    private Message(String code, String message)
     {
         this.code = code;
         this.message = message;

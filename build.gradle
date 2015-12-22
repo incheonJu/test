@@ -4,19 +4,24 @@ version '1.0-SNAPSHOT'
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
         maven { url "https://repo.spring.io/snapshot" }
         maven { url "https://repo.spring.io/milestone" }
     }
     dependencies {
         classpath "org.flywaydb:flyway-gradle-plugin:3.2.1"
+        classpath "org.gradle.api.plugins:gradle-tomcat-plugin:1.0"
+        classpath "org.gradle.api.plugins:gradle-cargo-plugin:1.4"
     }
 }
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.flywaydb.flyway'
 apply plugin: 'eclipse-wtp'
+apply plugin: 'war'
+apply plugin: 'tomcat'
+apply plugin: 'cargo'
 
 flyway {
     user = 'root'
@@ -25,7 +30,7 @@ flyway {
     schemas = ['test']
 }
 
-sourceCompatibility = 1.8
+sourceCompatibility = 1.7
 version = '1.0'
 
 sourceSets.main.output.resourcesDir = sourceSets.main.output.classesDir
@@ -52,8 +57,11 @@ dependencies {
     compile 'org.hibernate:hibernate-core:5.0.1.Final'
     compile 'org.hibernate:hibernate-entitymanager:5.0.1.Final'
     compile 'javax.servlet:javax.servlet-api:3.1.0'
-    compile 'jstl:jstl:1.2'
+    compile 'javax.servlet:jstl:1.2'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.6.2'
+    compile 'org.apache.poi:poi:3.9'
+    compile 'com.sun.mail:javax.mail:1.4.4'
+    compile 'org.springframework.security:spring-security-taglibs:4.0.2.RELEASE'
 
     //tiles
     compile 'org.apache.tiles:tiles-extras:3.0.5'
@@ -70,14 +78,73 @@ dependencies {
     compile 'org.flywaydb:flyway-maven-plugin:3.2.1'
     compile 'com.zaxxer:HikariCP:2.4.1'
 
-    compile (
+    compile 'ch.qos.logback:logback-classic:1.1.2'
+    compile 'ch.qos.logback:logback-core:1.1.2'
+    compile 'org.slf4j:slf4j-api:1.7.10'
+    // 조건부 설정을 사용하려면 아래의 디팬던시를 추가해 주어야 한다
+    compile 'org.codehaus.janino:janino:2.7.7'
+
+    /*compile (
             [group: 'org.slf4j', name: 'jcl-over-slf4j', version: '1.6.2'],
             [group: 'ch.qos.logback', name: 'logback-core', version: '1.0.0'],
             [group: 'ch.qos.logback', name: 'logback-classic', version: '1.0.0']
-            /*
+            *//*
             [group: 'ch.qos.logback', name: 'logback-classic', version: '1.0.0']{
              exclude(group: 'org.slf4j', name: 'slf4j-api', version: '1.6.2')
-            }*/
-    )
+            }*//*
+    )*/
 
+    // tomcat plugin 설정입니다.
+    String tomcatVersion = '7.0.47'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}"
+    tomcat "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
+    tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
+        exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
+    }
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+    providedCompile 'javax.websocket:javax.websocket-api:1.0'
+    providedCompile 'javax.servlet:jsp-api:2.0'
+    providedCompile "org.apache.tomcat:tomcat-servlet-api:${tomcatVersion}"
+
+    // cargo에 대한 설정입니다.
+    def cargoVersion = '1.4.5'
+    cargo "org.codehaus.cargo:cargo-core-uberjar:$cargoVersion",
+            "org.codehaus.cargo:cargo-ant:$cargoVersion"
+
+}
+
+// tomcarRun을 실행시키기 위해서 war에 대한 dependency를 주입합니다.
+tomcatRun {
+    contextPath = ""
+    URIEncoding = 'UTF-8'
+    dependsOn war
+}
+
+tomcatRunWar {
+    dependsOn war
+}
+
+// cargo를 이용한 배포를 위해서 war에 대한 dependency를 주입합니다.
+cargoRedeployRemote {
+    dependsOn war
+}
+
+cargoDeployRemote {
+    dependsOn war
+}
+
+cargo {
+    containerId = 'tomcat7x'
+    port = 8080
+
+    deployable {
+        context = "${project.name}"
+    }
+
+    // remoteDeploy 되는 target의 tomcat 정보
+    remote {
+       // hostname = '192.168.0.'
+       // username = ''
+       // password = ''
+    }
 }

@@ -5,6 +5,7 @@ import org.apache.tiles.Definition;
 import org.apache.tiles.definition.UnresolvingLocaleDefinitionsFactory;
 import org.apache.tiles.request.Request;
 import org.springframework.context.annotation.*;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -80,4 +81,9 @@ public class RootConfig {
         return commonsMultipartResolver;
     }
 
+    @Bean
+    public FileSystemResource fileSystemResource(){
+        FileSystemResource fileSystemResource = new FileSystemResource("d:");
+        return  fileSystemResource;
+    }
 }

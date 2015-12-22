@@ -15,7 +15,8 @@ import java.util.Map;
 @Configuration
 public class TilesConfig implements DefinitionsFactory {
     private static final Map<String, Definition> tilesDefinitions = new HashMap<String,Definition>();
-    private static final Attribute BASE_TEMPLATE = new Attribute("/WEB-INF/views/layout/admin/defaultLayout.jsp");
+    private static final Attribute BASE_TEMPLATE = new Attribute("/WEB-INF/views/layout/admin/template_login.jsp");
+    private static final Attribute BASE_TEMPLATE_LOGIN = new Attribute("/WEB-INF/views/tiles/admin/template_login.jsp");
 
     @Override
     public Definition getDefinition(String name, Request tilesContext) {
@@ -29,23 +30,45 @@ public class TilesConfig implements DefinitionsFactory {
      *
      * <code>Adds default layout definitions</code>
      */
-    private static void addDefaultLayoutDef(String name, String title, String body) {
+    private static void addFrontDefaultLayoutDef(String name, String title, String body) {
         Map<String, Attribute> attributes = new HashMap<String,Attribute>();
 
         attributes.put("title", new Attribute(title));
-        attributes.put("header", new Attribute("/WEB-INF/views/layout/header.jsp"));
+        attributes.put("header", new Attribute("/WEB-INF/views/tiles/front/header.jsp"));
         //attributes.put("left", new Attribute("/WEB-INF/views/layout/menu.jsp"));
         attributes.put("body", new Attribute(body));
-        attributes.put("footer", new Attribute("/WEB-INF/views/layout/footer.jsp"));
+        attributes.put("footer", new Attribute("/WEB-INF/views/tiles/footer.jsp"));
 
         tilesDefinitions.put(name, new Definition(name, BASE_TEMPLATE, attributes));
     }
 
+    private static void addAdminDefaultLayoutDef(String name, String title, String body) {
+        Map<String, Attribute> attributes = new HashMap<String,Attribute>();
+
+        attributes.put("title", new Attribute(title));
+        //attributes.put("meta", new Attribute("/WEB-INF/views/tiles/admin/common/meta.jsp"));
+        attributes.put("header", new Attribute("/WEB-INF/views/tiles/admin/common/header.jsp"));
+        attributes.put("left", new Attribute("/WEB-INF/views/tiles/admin/common/left.jsp"));
+        attributes.put("body", new Attribute(body));
+        attributes.put("footer", new Attribute("/WEB-INF/views/tiles/admin/common/footer.jsp"));
+
+        tilesDefinitions.put(name, new Definition(name, BASE_TEMPLATE, attributes));
+    }
+
+    private static void addAdminLoginLayoutDef(String name, String title, String body) {
+        Map<String, Attribute> attributes = new HashMap<String,Attribute>();
+
+        attributes.put("title", new Attribute(title));
+        attributes.put("meta", new Attribute("/WEB-INF/views/tiles/admin/common/meta.jsp"));
+        attributes.put("body", new Attribute(body));
+
+        tilesDefinitions.put(name, new Definition(name, BASE_TEMPLATE_LOGIN, attributes));
+    }
     /**
      * <code>Add Apache tiles definitions</code>
      */
     public static void addDefinitions(){
-        addDefaultLayoutDef("admin/home", "Home", "/WEB-INF/views/admin/login/login.jsp");
+        addAdminLoginLayoutDef("admin/login", "Login", "/WEB-INF/views/admin/login.jsp");
     }
 
 }

@@ -8,7 +8,7 @@
 
 	<web>
 		<link target="/">
-			<dir name="D:/02.WORK_SPACE/18.hibernateProject/work/test/web">
+			<dir name="D:/02.WORK_SPACE/18.hibernateProject/work/test/src/main/webapp">
 			</dir>
 		</link>
 	</web>

@@ -1,13 +1,10 @@
 package com.eip.template.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.access.SecurityConfig;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -23,7 +20,7 @@ public class WebConfig implements WebApplicationInitializer {
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
         rootContext.register(RootConfig.class);
         rootContext.register(DataConfig.class);
-        //rootContext.register(SecurityConfig.class);
+        rootContext.register(SecurityConfig.class);
         rootContext.register(SocialConfig.class);
         sc.addListener(new ContextLoaderListener(rootContext));
 
@@ -36,10 +33,10 @@ public class WebConfig implements WebApplicationInitializer {
 
         // Spring KorServlet Context
         AnnotationConfigWebApplicationContext korServletContext = new AnnotationConfigWebApplicationContext();
-        korServletContext.register(KorServletConfig.class);
-        ServletRegistration.Dynamic korDispatcher = sc.addServlet("korServlet", new DispatcherServlet(korServletContext));
-        korDispatcher.setLoadOnStartup(2);
-        korDispatcher.addMapping("/kor/*");
+        korServletContext.register(FrontServletConfig.class);
+        ServletRegistration.Dynamic frontDispatcher = sc.addServlet("frontServlet", new DispatcherServlet(korServletContext));
+        frontDispatcher.setLoadOnStartup(2);
+        frontDispatcher.addMapping("/front/*");
 
         CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
         characterEncodingFilter.setEncoding("UTF-8");
