@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="SystemMap">
+
+<!-- 게시판 -->
+	<resultMap id="systemLogListMap" type="SystemLog"> 
+    	<id property="opCode"    column="OP_CODE"/>
+    	<id property="opId"    column="OP_ID"/>
+    	<id property="opContents"    column="OP_CONTENTS"/>
+    	<id property="opEtc"    column="OP_ETC"/>
+    	<id property="delYn"    column="DEL_YN"/>
+    	<id property="createDt"    column="CREATE_DT"/>
+    	<id property="createId"    column="CREATE_ID"/>
+    	<id property="updateDt"    column="UPDATE_DT"/>
+    	<id property="updateId"    column="UPDATE_ID"/>
+	</resultMap>                         
+                                         
+	<select id="getSystemLogList" parameterType="map" resultMap="systemLogListMap">
+		select 
+			OP_CODE      ,
+			OP_ID        ,
+			OP_CONTENTS  ,
+			OP_ETC       ,
+			DEL_YN       ,
+			CREATE_DT    ,
+			CREATE_ID    ,
+			UPDATE_DT    ,
+			UPDATE_ID    
+		from
+		    tbl_system_log
+		WHERE 1=1
+		 
+		<choose>
+			<when test="queryColum == 'all'">
+            AND ( OP_ID like CONCAT('%', #{searchQuery}, '%') OR OP_CODE like CONCAT('%', #{searchQuery}, '%')  OR OP_CONTENTS like CONCAT('%', #{searchQuery}, '%'))
+        	</when>
+        	<when test="queryColum == 'opCode'">
+            AND  OP_CODE like CONCAT('%', #{searchQuery}, '%') 
+            </when>
+             <when test="queryColum == 'opId'">
+             AND OP_ID like CONCAT('%', #{searchQuery}, '%')
+             </when>
+             <when test="queryColum == 'opContents'">
+             AND OP_CONTENTS like CONCAT('%', #{searchQuery}, '%')
+             </when>
+        </choose>
+        <if test="searchStartDate != null and searchStartDate != '' and searchEndDate != null and searchEndDate != ''  ">
+			AND	 CREATE_DT between #{searchStartDate} AND  #{searchEndDate}
+		</if> 
+        
+  		<if test="orderColumn != null">
+		ORDER BY ${orderColumn} ${orderType}
+		</if> 
+	    <if test="startRow != null">
+	    limit #{startRow}, #{endRow}
+	    </if>
+	</select>
+	
+	<select id="getSystemLogCount" parameterType="map" resultType="int">
+		select 
+		    count(*)
+		from 
+		    tbl_system_log m
+		WHERE 1=1
+		<!-- 
+		<choose>
+			<when test="queryColum == 'all'">
+            AND ( CREATE_ID like CONCAT('%', #{searchQuery}, '%') OR OPER_NAME like CONCAT('%', #{searchQuery}, '%') )
+        	</when>
+        	<when test="queryColum == 'operId'">
+            AND  OPER_ID like CONCAT('%', #{searchQuery}, '%') 
+            </when>
+             <when test="queryColum == 'operName'">
+             AND OPER_NAME like CONCAT('%', #{searchQuery}, '%')
+             </when>
+        </choose>
+         -->
+	</select>
+	
+	
+	<select id="getSystemLog" parameterType="map" resultMap="systemLogListMap">
+		select 
+			OP_CODE      ,
+			OP_ID        ,
+			OP_CONTENTS  ,
+			OP_ETC       ,
+			DEL_YN       ,
+			CREATE_DT    ,
+			CREATE_ID    ,
+			UPDATE_DT    ,
+			UPDATE_ID    
+		from 
+		    tbl_system_log m
+		WHERE 1=1
+		 <if test="opCode != null and opCode != ''">
+		 and OP_CODE    =   #{opCode}
+		 </if>  
+	</select>
+	
+	
+	<insert id="insertSystemLog" parameterType="SystemLog" useGeneratedKeys="true" keyProperty="opCode">
+        INSERT INTO tbl_system_log
+        		(
+	               OP_CODE      ,
+					OP_ID        ,
+					OP_CONTENTS  ,
+					OP_ETC       ,
+					DEL_YN       ,
+					CREATE_DT    ,
+					CREATE_ID    ,
+					UPDATE_DT    ,
+					UPDATE_ID    
+       			)
+        VALUES
+        		(
+        			#{opCode} ,
+        			#{opId} ,
+        			#{opContents} ,
+        			#{opEtc} ,
+        			#{delYn} ,
+        			#{createDt} ,
+        			#{createId} ,
+        			#{updateDt} ,
+        			#{updateId} 
+        		)
+    </insert>
+    
+    <update id="updateSystemLog" parameterType="SystemLog"> 
+        UPDATE 
+        	tbl_system_log 
+        SET					
+        	OP_ID    	=   #{opId} , 
+        	OP_CONTENTS =   #{opContents} , 
+        	OP_ETC    	=   #{opEtc} , 
+        	DEL_YN    	=   #{delYn} , 
+        	UPDATE_DT   =   #{updateDt} , 
+        	UPDATE_ID   =   #{updateId} , 
+        WHERE
+         	OP_CODE    =   #{opCode}
+    </update>
+ 
+    <update id="deleteSystemLog" parameterType="String">
+        UPDATE 
+        	tbl_system_log 
+        SET	
+        	DEL_YN = 'Y'			
+        WHERE
+        	OP_CODE    =   #{opCode} 
+    </update>
+    
+</mapper>
+
+

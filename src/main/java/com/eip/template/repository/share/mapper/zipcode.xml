@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="ZipcodeMap">
+	<resultMap id="zipcodeListMap" type="Zipcode">
+    	<id property="zipcode" column="ZIP_CODE"/>
+    	<id property="sido" column="SIDO"/>
+    	<id property="gugun" column="GUGUN"/>    	
+    	<id property="dong" column="DONG"/>
+    	<id property="ri" column="RI"/>
+    	<id property="bldg" column="BLDG"/>
+    	<id property="bunji" column="BUNJI"/>
+    	<id property="seq" column="SEQ"/>
+	</resultMap>
+
+	<select id="zipcodeList" parameterType="map" resultMap="zipcodeListMap">
+		select 
+		    ZIP_CODE,
+		    SIDO,
+		    SIDO,
+		    GUGUN,
+		    DONG,
+		    RI,
+		    BLDG,
+		    BUNJI,
+		    SEQ
+		from 
+		    tbl_zipcode
+		WHERE 1=1
+		 <if test="dong != null and dong != ''">
+		 AND DONG like CONCAT('%', #{dong}, '%') OR RI like CONCAT('%', #{dong}, '%')
+		 </if>  
+		 <if test="oderColum == null">
+		 ORDER BY SEQ 
+		 </if>
+		 
+        <if test="oderColum != null and oderColum != ''">
+		ORDER BY ${oderColum} ${oder} 
+		</if>
+	    <if test="startRow != null">
+	    limit #{startRow}, #{endRow}
+	    </if>
+	</select>
+	
+	<select id="zipcodeCount" parameterType="map" resultType="int">
+		select 
+		    count(*)
+		from 
+		    tbl_zipcode
+		WHERE 1=1
+		 <if test="dong != null and dong != ''">
+		 AND DONG like CONCAT('%', #{dong}, '%') OR RI like CONCAT('%', #{dong}, '%')
+		 </if> 
+	</select>
+</mapper>

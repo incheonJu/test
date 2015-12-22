@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beansProjectDescription>
+	<version>1</version>
+	<pluginVersion><![CDATA[3.6.4.201503051146-RELEASE]]></pluginVersion>
+	<configSuffixes>
+		<configSuffix><![CDATA[xml]]></configSuffix>
+	</configSuffixes>
+	<enableImports><![CDATA[false]]></enableImports>
+	<configs>
+		<config>java:com.eip.template.config.AdminServletConfig</config>
+		<config>java:com.eip.template.config.DataConfig</config>
+		<config>java:com.eip.template.common.util.DownloadServlet</config>
+		<config>java:com.eip.template.config.RootConfig</config>
+		<config>java:com.eip.template.config.TilesConfig</config>
+	</configs>
+	<autoconfigs>
+	</autoconfigs>
+	<configSets>
+	</configSets>
+</beansProjectDescription>

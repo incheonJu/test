@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="FaqMap">
+
+<!-- 게시판 -->
+	<resultMap id="faqListMap" type="Faq"> 
+    	<id property="faqSeq"    column="FAQ_SEQ"/>
+    	<id property="faqTitle"    column="FAQ_TITLE"/>
+    	<id property="faqContents"    column="FAQ_CONTENTS"/>
+    	<id property="delYn"    column="DEL_YN"/>
+    	<id property="createDt"    column="CREATE_DT"/>
+    	<id property="createId"    column="CREATE_ID"/>
+    	<id property="updateDt"    column="UPDATE_DT"/>
+    	<id property="updateId"    column="UPDATE_ID"/>
+	</resultMap>                         
+                                         
+	<select id="getFaqList" parameterType="map" resultMap="faqListMap">
+		select 
+			FAQ_SEQ      ,
+			FAQ_TITLE    ,
+			FAQ_CONTENTS ,
+			DEL_YN         ,
+			CREATE_DT      ,
+			CREATE_ID      ,
+			UPDATE_DT      ,
+			UPDATE_ID
+		from 
+		    tbl_faq
+		WHERE 1=1
+		<![CDATA[and	ifnull(DEL_YN,'') <> 'Y']]>
+		<!-- 
+		<choose>
+			<when test="queryColum == 'all'">
+            AND ( m.CREATE_ID like CONCAT('%', #{searchQuery}, '%') OR m.OPER_NAME like CONCAT('%', #{searchQuery}, '%') )
+        	</when>
+        	<when test="queryColum == 'operId'">
+            AND  m.OPER_ID like CONCAT('%', #{searchQuery}, '%') 
+            </when>
+             <when test="queryColum == 'operName'">
+             AND m.OPER_NAME like CONCAT('%', #{searchQuery}, '%')
+             </when>
+        </choose>
+         -->
+  		<if test="orderColumn != null">
+		ORDER BY ${orderColumn} ${orderType}
+		</if> 
+	    <if test="startRow != null">
+	    limit #{startRow}, #{endRow}
+	    </if>
+	</select>
+	
+	<select id="getFaqCount" parameterType="map" resultType="int">
+		select 
+		    count(*)
+		from 
+		    tbl_faq m
+		WHERE 1=1
+		<!-- 
+		<choose>
+			<when test="queryColum == 'all'">
+            AND ( m.CREATE_ID like CONCAT('%', #{searchQuery}, '%') OR m.OPER_NAME like CONCAT('%', #{searchQuery}, '%') )
+        	</when>
+        	<when test="queryColum == 'operId'">
+            AND  m.OPER_ID like CONCAT('%', #{searchQuery}, '%') 
+            </when>
+             <when test="queryColum == 'operName'">
+             AND m.OPER_NAME like CONCAT('%', #{searchQuery}, '%')
+             </when>
+        </choose>
+         -->
+	</select>
+	
+	
+	<select id="getFaq" parameterType="map" resultMap="faqListMap">
+		select 
+			FAQ_SEQ      ,
+			FAQ_TITLE    ,
+			FAQ_CONTENTS ,
+			DEL_YN         ,
+			CREATE_DT      ,
+			CREATE_ID      ,
+			UPDATE_DT      ,
+			UPDATE_ID
+		from 
+		    tbl_faq m
+		WHERE 1=1
+		 <if test="faqSeq != null and faqSeq != ''">
+		 and m.FAQ_SEQ = #{faqSeq}
+		 </if>  
+	</select>
+	
+	
+	<insert id="insertFaq" parameterType="Faq" useGeneratedKeys="true" keyProperty="faqSeq">
+        INSERT INTO tbl_faq
+        		(
+	                FAQ_SEQ      ,
+					FAQ_TITLE    ,
+					FAQ_CONTENTS ,
+					DEL_YN         ,
+					CREATE_DT      ,
+					CREATE_ID      ,
+					UPDATE_DT      ,
+					UPDATE_ID
+       			)
+        VALUES
+        		(
+        			#{faqSeq} ,
+        			#{faqTitle} ,
+        			#{faqContents} ,
+        			#{delYn} ,
+        			#{createDt} ,
+        			#{createId} ,
+        			#{updateDt} ,
+        			#{updateId} 
+        		)
+    </insert>
+    
+    <update id="updateFaq" parameterType="Faq"> 
+        UPDATE 
+        	tbl_faq 
+        SET					
+        	FAQ_TITLE    =   #{faqTitle} ,
+        	FAQ_CONTENTS    =   #{faqContents} ,
+        	DEL_YN    =   #{delYn} ,
+        	UPDATE_DT    =   #{updateDt} ,
+        	UPDATE_ID    =   #{updateId} 
+        WHERE
+        	FAQ_SEQ=#{faqSeq} 
+    </update>
+ 
+    <update id="deleteFaq" parameterType="Faq">
+        UPDATE 
+        	tbl_faq 
+        SET	
+        	DEL_YN = 'Y'			
+        WHERE
+        	FAQ_SEQ=#{faqSeq}
+    </update>
+</mapper>
+
+

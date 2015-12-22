@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="CodeMap">
+	<resultMap id="masterCodeListMap" type="MasterCode">
+    	<id property="grpCd" column="GRP_CD"/>
+    	<id property="grpCdNm" column="GRP_CD_NM"/>
+    	<id property="useYn" column="USE_YN"/>    	
+    	<id property="grpCdDesc" column="GRP_CD_DESC"/>
+    	<id property="createDt" column="CREATE_DT"/>
+    	<id property="createId" column="CREATE_ID"/>
+    	<id property="updateDt" column="UPDATE_DT"/>
+    	<id property="updateId" column="UPDATE_ID"/>
+	</resultMap>
+
+	<select id="getMasterCodeList" parameterType="map" resultMap="masterCodeListMap">
+		select 
+		    m.GRP_CD,
+		    m.GRP_CD_NM,
+		    USE_YN,
+		    GRP_CD_DESC,
+		    CREATE_DT,
+		    CREATE_ID,
+		    UPDATE_DT,
+		    UPDATE_ID
+		from 
+		    tbl_master_code m
+		WHERE 1=1
+		 <if test="grpCd != null and grpCd != ''">
+		 and m.GRP_CD = #{grpCd}
+		 </if>  
+		 <if test="grpCdNm != null and grpCdNm != ''">
+		 and m.GRP_CD_NM = #{grpCdNm}
+		 </if> 
+		 <if test="useYn != null and useYn != ''">
+		 and m.USE_YN = #{useYn}
+		 </if>  
+
+		 <if test="searchQuery != null">
+			 <choose>
+				<when test="queryColum == 'all'">
+	            and ( m.GRP_CD like CONCAT('%', #{searchQuery}, '%') OR m.GRP_CD_NM like CONCAT('%', #{searchQuery}, '%') ) 
+	        	</when>
+	        	<when test="queryColum == 'grpCd'">
+	            and m.GRP_CD like CONCAT('%', #{searchQuery}, '%') 
+	        	</when>
+	        	<when test="queryColum == 'grpCdNm'">
+	            and m.GRP_CD_NM like CONCAT('%', #{searchQuery}, '%')  
+	        	</when>
+			 </choose>
+		</if>
+        <if test="orderColumn != null and orderColumn != ''">
+		ORDER BY ${orderColumn} ${orderType} 
+		</if>
+	    <if test="startRow != null">
+	    limit #{startRow}, #{endRow}
+	    </if>
+	</select>
+	
+	<select id="getMasterCodeCount" parameterType="map" resultType="int">
+		select 
+		    count(*)
+		from 
+		    tbl_master_code m
+		WHERE 1=1
+		  <if test="grpCd != null and grpCd != ''">
+		 and m.GRP_CD = #{grpCd}
+		 </if>  
+		 <if test="grpCdNm != null and grpCdNm != ''">
+		 and m.GRP_CD_NM = #{grpCdNm}
+		 </if> 
+		 <if test="useYn != null and useYn != ''">
+		 and m.USE_YN = #{useYn}
+		 </if>  
+
+		 <if test="searchQuery != null">
+			 <choose>
+				<when test="queryColum == 'all'">
+	            and ( m.GRP_CD like CONCAT('%', #{searchQuery}, '%') OR m.GRP_CD_NM like CONCAT('%', #{searchQuery}, '%') ) 
+	        	</when>
+	        	<when test="queryColum == 'grpCd'">
+	            and m.GRP_CD like CONCAT('%', #{searchQuery}, '%') 
+	        	</when>
+	        	<when test="queryColum == 'grpCdNm'">
+	            and m.GRP_CD_NM like CONCAT('%', #{searchQuery}, '%')  
+	        	</when>
+			 </choose>
+		</if>
+	</select>
+	
+	<select id="getMasterCode" parameterType="map" resultMap="masterCodeListMap">
+		select 
+		    m.GRP_CD,
+		    m.GRP_CD_NM,
+		    USE_YN,
+		    GRP_CD_DESC,
+		    CREATE_DT,
+		    CREATE_ID,
+		    UPDATE_DT,
+		    UPDATE_ID
+		from 
+		    tbl_master_code m
+		WHERE 1=1
+		 <if test="grpCd != null and grpCd != ''">
+		 and m.GRP_CD = #{grpCd}
+		 </if>  
+	</select>
+	
+	
+	<insert id="insertMasterCode" parameterType="MasterCode" useGeneratedKeys="true" keyProperty="grpCd">
+        INSERT INTO tbl_master_code
+        		(
+	                GRP_CD,
+				    GRP_CD_NM,
+				    USE_YN,
+				    GRP_CD_DESC,
+				    CREATE_DT,
+				    CREATE_ID,
+				    UPDATE_DT,
+				    UPDATE_ID
+       			)
+        VALUES
+        		(
+        			#{grpCd} ,
+				    #{grpCdNm} ,
+				    #{useYn} ,
+				    #{grpCdDesc} ,
+				    #{createDt} ,
+				    #{createId} ,
+				    #{updateDt} ,
+				    #{updateId}
+        		)
+    </insert>
+    
+    <update id="updateMasterCode" parameterType="MasterCode"> 
+        UPDATE 
+        	tbl_master_code 
+        SET					
+			GRP_CD_NM =   #{grpCdNm} ,
+			USE_YN =   #{useYn} ,
+			GRP_CD_DESC =   #{grpCdDesc} ,
+			UPDATE_DT =   #{updateDt} ,
+			UPDATE_ID =   #{updateId}
+        WHERE
+        	GRP_CD=#{grpCd} 
+    </update>
+ 
+    <delete id="deleteMasterCode" parameterType="MasterCode">
+        DELETE FROM
+        	tbl_master_code
+        WHERE
+        	GRP_CD=#{grpCd} 
+    </delete>
+	
+	<!-- 상세코드 부분 -->
+	
+	
+	<resultMap id="detailCodeListMap" type="DetailCode">
+		<id property="masterCode.grpCd" column="GRP_CD"/>
+    	<id property="masterCode.grpCdNm" column="GRP_CD_NM"/>
+    	<id property="grpCd" column="GRP_CD"/>
+    	<id property="dtlsCd" column="DTLS_CD"/>
+    	<id property="dtlsCdNm" column="DTLS_CD_NM"/>
+    	<id property="cdVal1" column="CD_VAL1"/>
+    	<id property="cdVal2" column="CD_VAL2"/>
+    	<id property="cdVal3" column="CD_VAL3"/>
+    	<id property="prrtRnk" column="PRRT_RNK"/>
+    	<id property="useYn" column="USE_YN"/>
+    	<id property="dtlsCdDesc" column="DTLS_CD_DESC"/>
+    	<id property="createDt" column="CREATE_DT"/>
+    	<id property="createId" column="CREATE_ID"/>
+    	<id property="updateDt" column="UPDATE_DT"/>
+    	<id property="updateId" column="UPDATE_ID"/>
+	</resultMap>
+
+	<select id="getDetailCodeList" parameterType="map" resultMap="detailCodeListMap">
+		select 
+		    GRP_CD       ,
+		    F_GRPCDNM(GRP_CD) GRP_CD_NM, 
+		    DTLS_CD      ,
+		    DTLS_CD_NM  ,
+		    CD_VAL1      ,
+		    CD_VAL2      ,
+		    CD_VAL3      ,
+		    PRRT_RNK     ,
+		    USE_YN       ,
+		    DTLS_CD_DESC ,
+		    CREATE_DT    ,
+		    CREATE_ID    ,
+		    UPDATE_DT    ,
+		    UPDATE_ID
+		from 
+		    tbl_detail_code m
+		WHERE 1=1
+		 <if test="grpCd != null and grpCd != ''">
+		 and m.GRP_CD = #{grpCd}
+		 </if>  
+		 <if test="dtlsCd != null and dtlsCd != ''">
+		 and m.DTLS_CD = #{dtlsCd}
+		 </if>
+		 <if test="dtlsCdNm != null and dtlsCdNm != ''">
+		 and m.DTLS_CD_NM = #{dtlsCdNm}
+		 </if> 
+		 <if test="useYn != null and useYn != ''">
+		 and m.USE_YN = #{useYn}
+		 </if>  
+
+		 <if test="searchQuery != null">
+			 <choose>
+				<when test="queryColum == 'all'">
+	            and ( 
+	            	m.GRP_CD like CONCAT('%', #{searchQuery}, '%') 
+	            	OR m.DTLS_CD like CONCAT('%', #{searchQuery}, '%') 
+	            	OR m.DTLS_CD_NM like CONCAT('%', #{searchQuery}, '%')
+	            ) 
+	        	</when>
+	        	<when test="queryColum == 'grpCd'">
+	            and m.GRP_CD like CONCAT('%', #{searchQuery}, '%') 
+	        	</when>
+	        	<when test="queryColum == 'grpNm'">
+	            and F_GRPCDNM(GRP_CD) like CONCAT('%', #{searchQuery}, '%') 
+	        	</when>
+	        	<when test="queryColum == 'dtlsCd'">
+	            and m.DTLS_CD like CONCAT('%', #{searchQuery}, '%') 
+	        	</when>
+	        	<when test="queryColum == 'dtlsCdNm'">
+	            and m.DTLS_CD_NM like CONCAT('%', #{searchQuery}, '%')  
+	        	</when>
+			 </choose>
+		</if>
+        <if test="orderColumn != null and orderColumn != ''">
+		ORDER BY ${orderColumn} ${orderType} 
+		</if>
+	    <if test="startRow != null">
+	    limit #{startRow}, #{endRow}
+	    </if>
+	</select>
+	
+	<select id="getDetailCodeCount" parameterType="map" resultType="int">
+		select 
+		    count(*)
+		from 
+		    tbl_detail_code m
+		WHERE 1=1
+		  <if test="grpCd != null and grpCd != ''">
+		 and m.GRP_CD = #{grpCd}
+		 </if>  
+		 <if test="dtlsCd != null and dtlsCd != ''">
+		 and m.DTLS_CD = #{dtlsCd}
+		 </if>
+		 <if test="dtlsCdNm != null and dtlsCdNm != ''">
+		 and m.DTLS_CD_NM = #{dtlsCdNm}
+		 </if> 
+		 <if test="useYn != null and useYn != ''">
+		 and m.USE_YN = #{useYn}
+		 </if>  
+		<if test="searchQuery != null">
+			 <choose>
+				<when test="queryColum == 'all'">
+	            and ( 
+	            	m.GRP_CD like CONCAT('%', #{searchQuery}, '%') 
+	            	OR m.DTLS_CD like CONCAT('%', #{searchQuery}, '%') 
+	            	OR m.DTLS_CD_NM like CONCAT('%', #{searchQuery}, '%')
+	            ) 
+	        	</when>
+	        	<when test="queryColum == 'dtlsCd'">
+	            and m.GRP_CD like CONCAT('%', #{searchQuery}, '%') 
+	        	</when>
+	        	<when test="queryColum == 'grpCd'">
+	            and m.DTLS_CD like CONCAT('%', #{searchQuery}, '%') 
+	        	</when>
+	        	<when test="queryColum == 'dtlsCdNm'">
+	            and m.DTLS_CD_NM like CONCAT('%', #{searchQuery}, '%')  
+	        	</when>
+			 </choose>
+		</if>
+	</select>
+	
+	<select id="getDetailCode" parameterType="map" resultMap="detailCodeListMap">
+		select 
+		    GRP_CD       ,  
+		    F_GRPCDNM(GRP_CD) GRP_CD_NM,   
+		    DTLS_CD      ,
+		    DTLS_CD_NM  ,
+		    CD_VAL1      ,
+		    CD_VAL2      ,
+		    CD_VAL3      ,
+		    PRRT_RNK     ,
+		    USE_YN       ,
+		    DTLS_CD_DESC ,
+		    CREATE_DT    ,
+		    CREATE_ID    ,
+		    UPDATE_DT    ,
+		    UPDATE_ID
+		from 
+		    tbl_detail_code 
+		WHERE 1=1
+		 <if test="grpCd != null and grpCd != ''">
+		 and 	GRP_CD = #{grpCd}
+		 </if>
+		 <if test="dtlsCd != null and dtlsCd != ''">
+		 AND	DTLS_CD=#{dtlsCd}  
+		 </if>
+	</select>
+	
+	<insert id="insertDetailCode" parameterType="DetailCode" useGeneratedKeys="true" keyProperty="grpCd">
+        INSERT INTO tbl_detail_code
+        		(
+	                GRP_CD       ,
+				    DTLS_CD      ,
+				    DTLS_CD_NM  ,
+				    CD_VAL1      ,
+				    CD_VAL2      ,
+				    CD_VAL3      ,
+				    PRRT_RNK     ,
+				    USE_YN       ,
+				    DTLS_CD_DESC ,
+				    CREATE_DT    ,
+				    CREATE_ID    ,
+				    UPDATE_DT    ,
+				    UPDATE_ID
+       			)
+        VALUES
+        		(
+        			#{grpCd} ,
+        			#{dtlsCd} ,
+        			#{dtlsCdNm} ,
+        			#{cdVal1} ,
+        			#{cdVal2} ,
+        			#{cdVal3} ,
+        			case when #{prrtRnk} is null or #{prrtRnk} = '' then 
+					        			(
+						        			select max(a.prrt_rnk) prrt_rnk
+											from 
+											(
+												select ifnull(PRRT_RNK,0) prrt_rnk from tbl_detail_code where grp_cd = #{grpCd}
+												union select 1 prrt_rnk from dual
+											) a
+										) 
+					else #{prrtRnk} end,        			
+        			#{useYn} ,
+        			#{dtlsCdDesc} ,
+        			#{createDt} ,
+        			#{createId} ,
+        			#{updateDt} ,
+        			#{updateId} 
+        		)
+    </insert>
+    
+    <update id="updateDetailCode" parameterType="DetailCode"> 
+        UPDATE 
+        	tbl_detail_code 
+        SET					
+			DTLS_CD_NM =   #{dtlsCdNm} ,
+			CD_VAL1 =   #{cdVal1} ,
+			CD_VAL2 =   #{cdVal2} ,
+			CD_VAL3 =   #{cdVal3} ,
+			PRRT_RNK =   #{prrtRnk} ,
+			USE_YN =   #{useYn} ,
+			DTLS_CD_DESC =   #{dtlsCdDesc} ,
+			UPDATE_DT =   #{updateDt} ,
+			UPDATE_ID =   #{updateId} 
+        WHERE
+        	GRP_CD=#{grpCd} 
+        AND	DTLS_CD=#{dtlsCd}
+        	
+    </update>
+ 
+    <delete id="deleteDetailCode" parameterType="DetailCode">
+        DELETE FROM
+        	tbl_detail_code
+        WHERE
+        	GRP_CD=#{grpCd} 
+        AND	DTLS_CD=#{dtlsCd} 	
+    </delete>
+</mapper>

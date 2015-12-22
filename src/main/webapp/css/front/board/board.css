@@ -1,0 +1,251 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* 게시판 리스트 */
+.boardArea { float:left; width:770px; margin-bottom:20px; }
+.boardArea .searchboxarea { float:left; width:770px; height:30px; }
+.boardArea .searchboxarea .searchbox { float:left; width:600px; }
+.boardArea .searchboxarea .searchbox .selectbox { float:left; width:100px; border:solid 1px #999999; height:21px; font-size:12px; margin-right:3px; }
+.boardArea .searchboxarea .searchbox .sebox { width:200px; height:17px; background:#ffffff; border:solid 1px #999999; font-size:12px; }
+.boardArea .searchboxarea .searchbox .inbtn { width:120px; height:21px; border:none; cursor:pointer; font-size:12px; color:#fff; background-color:#00a7cd; }
+.boardArea .searchboxarea .searchbox .inbtn_w80 { width:80px; height:21px; border:none; cursor:pointer; font-size:12px; color:#fff; background-color:#00a7cd; }
+.boardArea .searchboxarea .cnt { float:right; display:block; padding-right:10px; padding-top:10px; font-weight:bold; font-size:11px; color:#898989; width:100px; text-align:right; }
+.boardArea .searchboxarea .cnt .n { color:#000000; }
+
+.boardArea .boardlist { float:left; width:100%; }
+.boardArea .boardlist .title { height:10px; background:#79b1dd; font-weight:bold; color:#FFFFFF; text-align:center; padding:10px 0 10px 0; margin-bottom:10px; border-radius:5px; }
+.boardArea .boardlist .title .w10 { float:left; display:block; width:10%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.boardArea .boardlist .title .w15 { float:left; display:block; width:15%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.boardArea .boardlist .title .w20 { float:left; display:block; width:20%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.boardArea .boardlist .title .w30 { float:left; display:block; width:30%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.boardArea .boardlist .title .w35 { float:left; display:block; width:35%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.boardArea .boardlist .title .w40 { float:left; display:block; width:40%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.boardArea .boardlist .title .w45 { float:left; display:block; width:45%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.boardArea .boardlist .title .w50 { float:left; display:block; width:50%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.boardArea .boardlist .title .w60 { float:left; display:block; width:60%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.boardArea .boardlist .title .w70 { float:left; display:block; width:70%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+.boardArea .boardlist .list { width:100%; }
+.boardArea .boardlist .list li { height:30px; padding:0 0 0 0; display:block; text-align:center; }
+.boardArea .boardlist .list li.bg { background:#f0f0f0; }
+.boardArea .boardlist .list li .w10 { float:left; display:block; width:10%; padding-top:10px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.boardArea .boardlist .list li .w15 { float:left; display:block; width:15%; padding-top:10px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.boardArea .boardlist .list li .w20 { float:left; display:block; width:20%; padding-top:10px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.boardArea .boardlist .list li .w30 { float:left; display:block; width:30%; padding-top:10px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.boardArea .boardlist .list li .w35 { float:left; display:block; width:35%; padding-top:10px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.boardArea .boardlist .list li .w40 { float:left; display:block; width:40%; padding-top:10px; text-align:left; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.boardArea .boardlist .list li .w45 { float:left; display:block; width:45%; padding-top:10px; text-align:left; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.boardArea .boardlist .list li .w50 { float:left; display:block; width:50%; padding-top:10px; text-align:left; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.boardArea .boardlist .list li .w60 { float:left; display:block; width:60%; padding-top:10px; text-align:left; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.boardArea .boardlist .list li .w70 { float:left; display:block; width:70%; padding-top:10px; text-align:left; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.boardArea .boardlist .list li .tl { text-align:left; } 
+.boardArea .boardlist .list li .pt4 { padding-top:4px; }
+
+/* 메인화면 게시글 리스트 */
+.mainBoardArea { float:left; width:490px; height:373px; margin-left:3px; margin-top:3px; margin-bottom:20px; background:#FAFAFA; }
+
+.mainBoardArea .boardlist { float:left; width:100%; }
+.mainBoardArea .boardlist .title { height:10px; background:#79b1dd; font-weight:bold; color:#FFFFFF; text-align:center; padding:10px 0 10px 0; margin-bottom:10px; border-radius:5px; }
+.mainBoardArea .boardlist .title .w10 { float:left; display:block; width:10%; }
+.mainBoardArea .boardlist .title .w15 { float:left; display:block; width:15%; }
+.mainBoardArea .boardlist .title .w20 { float:left; display:block; width:20%; }
+.mainBoardArea .boardlist .title .w30 { float:left; display:block; width:30%; }
+.mainBoardArea .boardlist .title .w35 { float:left; display:block; width:35%; }
+.mainBoardArea .boardlist .title .w40 { float:left; display:block; width:40%; }
+.mainBoardArea .boardlist .title .w45 { float:left; display:block; width:45%; }
+.mainBoardArea .boardlist .title .w50 { float:left; display:block; width:50%; }
+.mainBoardArea .boardlist .title .w60 { float:left; display:block; width:60%; }
+.mainBoardArea .boardlist .title .w70 { float:left; display:block; width:70%; }
+
+.mainBoardArea .boardlist .list { width:100%; }
+.mainBoardArea .boardlist .list li { height:30px; padding:0 0 0 0; display:block; text-align:center; }
+.mainBoardArea .boardlist .list li.bg { background:#f0f0f0; }
+.mainBoardArea .boardlist .list li .w10 { float:left; display:block; width:10%; padding-top:10px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+.mainBoardArea .boardlist .list li .w15 { float:left; display:block; width:15%; padding-top:10px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+.mainBoardArea .boardlist .list li .w20 { float:left; display:block; width:20%; padding-top:10px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+.mainBoardArea .boardlist .list li .w30 { float:left; display:block; width:30%; padding-top:10px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+.mainBoardArea .boardlist .list li .w30 .black { color : #666;}
+.mainBoardArea .boardlist .list li .w35 { float:left; display:block; width:35%; padding-top:10px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+.mainBoardArea .boardlist .list li .w40 { float:left; display:block; width:40%; padding-top:10px; text-align:left; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+.mainBoardArea .boardlist .list li .w45 { float:left; display:block; width:45%; padding-top:10px; text-align:left; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+.mainBoardArea .boardlist .list li .w50 { float:left; display:block; width:50%; padding-top:10px; text-align:left; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+.mainBoardArea .boardlist .list li .w50 .black { color : #666; }
+.mainBoardArea .boardlist .list li .w60 { float:left; display:block; width:60%; padding-top:10px; text-align:left; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+.mainBoardArea .boardlist .list li .w70 { float:left; display:block; width:70%; padding-top:10px; text-align:left; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+.mainBoardArea .boardlist .list li .tl { text-align:left; } 
+.mainBoardArea .boardlist .list li .pt4 { padding-top:4px; }
+
+/* 포토게시판 */
+.boardArea .boardlist .photolist { width:100%; }
+.boardArea .boardlist .photolist li { height:70px; padding:8px 0 12px 0; display:block; text-align:center; }
+.boardArea .boardlist .photolist li.bg { background:#f0f0f0; }
+.boardArea .boardlist .photolist li .thumimg { float:left; display:block; width:116px; height:66px; background:#FFFFFF; border:solid 1px #dddddd; padding:3px; }
+.boardArea .boardlist .photolist li .stitle { display:block; float:left; padding-top:30px; padding-left:10px; }
+.boardArea .boardlist .photolist li .w10 { float:left; display:block; width:10%; padding-top:30px; }
+.boardArea .boardlist .photolist li .w15 { float:left; display:block; width:15%; padding-top:30px; }
+.boardArea .boardlist .photolist li .w20 { float:left; display:block; width:20%; padding-top:30px; }
+.boardArea .boardlist .photolist li .w30 { float:left; display:block; width:30%; padding-top:30px; }
+.boardArea .boardlist .photolist li .w40 { float:left; display:block; width:40%; text-align:left; }
+.boardArea .boardlist .photolist li .w45 { float:left; display:block; width:45%; text-align:left; }
+.boardArea .boardlist .photolist li .w50 { float:left; display:block; width:50%; text-align:left; }
+.boardArea .boardlist .photolist li .w60 { float:left; display:block; width:60%; text-align:left; }
+.boardArea .boardlist .photolist li .w70 { float:left; display:block; width:70%; text-align:left; }
+
+.boardArea .btna { width:100%; text-align:right;}
+.boardArea .btna .inbtn { width:100px; height:25px; border:none; cursor:pointer; font-size:12px; color:#fff; background-color:#ff5832; }
+.boardArea .btna .inbtn.col_ff8b32 { background-color:#ff8b32; }
+
+.boardArea .paging { float:left; width:100%; padding-top:20px; text-align:center; border-top:solid 2px #79b1dd; padding-bottom:20px; }
+.boardArea .paging .prev { display:inline; padding-right:10px; }
+.boardArea .paging .next { display:inline; padding-left:10px; }
+.boardArea .paging .pagNum { display:inline; }
+.boardArea .paging .pagNum li { display:inline; }
+.boardArea .paging .pagNum li a { padding:2px 5px; font-size:11px; font-weight:bold; color:#959595; }
+.boardArea .paging .pagNum li a.on { color:#111111; }
+.boardArea .paging img { vertical-align:middle; }
+
+.boardArea .boardlist a:link, a:active, a:visited { text-decoration:none; color:#666; }
+
+/* 게시글 작성 */
+.writeArea { float:left; width:770px; }
+.writeArea .atxt { float:left; width:770px; background:url(/resources/images/member/bullet01.png) 10px 7px no-repeat; text-indent:25px; padding-top:5px; padding-bottom:10px; border-bottom:solid 1px #dddddd;}
+.writeArea .formArea { float:left; width:770px; margin-bottom:25px; }
+.writeArea .formArea dl { float:left; display:block; width:770px; border-bottom:solid 1px #dddddd; padding-top:15px; padding-bottom:15px; }
+.writeArea .formArea dl dt { float:left; display:block; width:110px; background:url(/resources/images/member/bullet01.png) 10px 7px no-repeat; padding-left:25px; padding-top:6px; margin:0; font-weight:bold; }
+.writeArea .formArea dl dt.none { background:none; }
+.writeArea .formArea dl dd { float:left; font-size:12px; color:#6d6d6d; padding-right:4px; }
+.writeArea .formArea dl dd .txt { float:left; display:block; width:80px; padding-top:5px; font-weight: bold; }
+.writeArea .formArea dl dd .val { float:left; display:block; width:200px; padding-top:5px; }
+.writeArea .formArea dl dd .d1 { float:left; display:block; width:280px; }
+.writeArea .formArea dl dd .d1 .txt { float:left; display:block; width:80px; padding-top:5px; }
+.writeArea .formArea dl dd .d1 .val { float:left; display:block; width:200px; padding-top:5px; }
+.writeArea .formArea dl dd .d2 { float:left; display:block; width:280px; }
+.writeArea .formArea dl dd .d2 .txt { float:left; display:block; width:80px; padding-top:5px; }
+.writeArea .formArea dl dd .d2 .val { float:left; display:block; width:200px; padding-top:5px; }
+.writeArea .formArea dl dd input { height:15px; background:#ffffff; border:solid 1px #999999; padding-top:3px; font-size:12px; }
+.writeArea .formArea dl dd select { height:20px; font-size:12px; color:#666666; }
+.writeArea .formArea dl dd textarea { background:#ffffff; border:solid 1px #999999; color:#666; padding-top:3px; font-size:12px; overflow:auto; }
+.writeArea .formArea dl dd input.none { border:none; background:none; height:12px; }
+.writeArea .formArea dl dd .inputfile { border:none; background:none; height:21px; }
+.writeArea .formArea dl dd.txt { padding-top:6px; }
+.writeArea .formArea .InputComb { height:21px; background:#ffffff; border:solid 1px #999999; font-size:12px; }
+.writeArea .formArea .inbtn { width:120px; height:21px; border:none; cursor:pointer; font-size:12px; color:#fff; background-color:#ff5832; }
+.writeArea .formArea .inbtn.colff835c { background-color:#ff835c; }
+.writeArea .formArea .btnadd { background-color:#ff8b32; width:50px; height:20px; font-weight:normal; color:#FFFFFF; border:none; cursor:pointer; }
+.writeArea .formArea .btndel { background-color:#ff5832; width:50px; height:20px; font-weight:normal; color:#FFFFFF; border:none; cursor:pointer; }
+.writeArea .formArea .sclist { border:solid 1px #999999; padding:5px; overflow:auto; height:70px; margin-right:10px; }
+.writeArea .formArea .sclist li { display:block; margin-bottom:5px; }
+.writeArea .formArea .sclist li .chkbox { border:none; vertical-align:middle; }
+
+.writeArea .regbtn { float:left; width:770px; padding:5px 0 50px 0; text-align:center; }
+
+
+/* 게시글 보기 */
+.viewArea { float:left; width:770px; }
+.viewArea .infotitle { float:left; width:770px; padding-top:5px; padding-bottom:7px; border-bottom:solid 1px #dddddd;}
+.viewArea .infotitle .num { float:left; width:500px; display:block; padding-left:10px; }
+.viewArea .infotitle .date { float:rigt; text-align:right; display:block; padding-right:10px; }
+.viewArea .viewer { float:left; width:770px; margin-bottom:20px; }
+.viewArea .viewer dl { float:left; display:block; width:770px; border-bottom:solid 1px #dddddd; padding-top:15px; padding-bottom:15px; }
+.viewArea .viewer dl dt { float:left; display:block; width:110px; background:url(/resources/images/member/bullet01.png) 10px 7px no-repeat; padding-left:25px; padding-top:6px; margin:0; font-weight:bold; }
+.viewArea .viewer dl dt.none { background:none; }
+.viewArea .viewer dl dd { float:left; display:block; font-size:12px; color:#6d6d6d; padding-right:4px; padding-top:6px; }
+.viewArea .viewer dl dd.conTxt { min-height:400px; width:620px; line-height:180%;}
+.viewArea .viewer dl dd .txt { float:left; display:block; width:80px; padding-top:5px; font-weight: bold; }
+.viewArea .viewer dl dd .val { float:left; display:block; width:200px; padding-top:5px; }
+.viewArea .viewer dl dd .d1 { float:left; display:block; width:280px; }
+.viewArea .viewer dl dd .d1 .txt { float:left; display:block; width:80px; padding-top:5px; font-weight: bold; }
+.viewArea .viewer dl dd .d1 .val { float:left; display:block; width:200px; padding-top:5px; }
+.viewArea .viewer dl dd .d2 { float:left; display:block; width:280px; }
+.viewArea .viewer dl dd .d2 .txt { float:left; display:block; width:80px; padding-top:5px; font-weight: bold; }
+.viewArea .viewer dl dd .d2 .val { float:left; display:block; width:200px; padding-top:5px; }
+.viewArea .viewer dl dd input { height:15px; background:#ffffff; border:solid 1px #999999; padding-top:3px; font-size:12px; }
+.viewArea .viewer dl dd select { height:20px; font-size:12px; color:#666666; }
+.viewArea .viewer dl dd textarea { background:#ffffff; border:solid 1px #999999; color:#666; padding-top:3px; font-size:12px; overflow:auto; }
+.viewArea .viewer dl dd input.none { border:none; background:none; height:12px; }
+.viewArea .viewer dl dd .inputfile { border:none; background:none; height:21px; }
+.viewArea .viewer dl dd.txt { padding-top:6px; }
+.viewArea .viewer .InputComb { height:21px; background:#ffffff; border:solid 1px #999999; font-size:12px; }
+.viewArea .viewer .inbtn { width:120px; height:21px; border:none; cursor:pointer; font-size:12px; color:#fff; background-color:#ff5832; }
+.viewArea .viewer .inbtn.colff835c { background-color:#ff835c; }
+.viewArea .viewer .btnadd { background-color:#ff8b32; width:50px; height:20px; font-weight:normal; color:#FFFFFF; border:none; cursor:pointer; }
+.viewArea .viewer .btndel { background-color:#ff5832; width:50px; height:20px; font-weight:normal; color:#FFFFFF; border:none; cursor:pointer; }
+.viewArea .viewer .sclist { border:solid 1px #999999; padding:5px; overflow:auto; height:70px; margin-right:10px; }
+.viewArea .viewer .sclist li { display:block; margin-bottom:5px; }
+.viewArea .viewer .sclist li .chkbox { border:none; vertical-align:middle; }
+
+/* 설문조사 페이지 */
+.viewArea .surveyviewer { float:left; width:770px;  }
+.viewArea .surveyviewer .surverycontent { float:left; padding:15px; width:740px; background:#f0f0f0; min-height:90px; }
+.viewArea .surveyviewer .surveryitem { float:left; width:770px; margin-top:30px; border-top:dotted 1px #dddddd; margin-bottom:30px; }
+.viewArea .surveyviewer .surveryitem .itemlist { float:left; width:730px; padding:20px; border-bottom:dotted 1px #dddddd; }
+.viewArea .surveyviewer .surveryitem .itemlist .itemtitle { display:block; height:30px; color:#000000; }
+.viewArea .surveyviewer .surveryitem .itemlist li { display:block; height:30px; }
+.viewArea .surveyviewer .viewer { float:left; width:770px; margin-bottom:0px; }
+.viewArea .surveyviewer .viewer dl { float:left; display:block; width:770px; border-bottom:solid 1px #dddddd; padding-top:15px; padding-bottom:15px; }
+.viewArea .surveyviewer .viewer dl dt { float:left; display:block; width:110px; background:url(/resources/images/member/bullet01.png) 10px 7px no-repeat; padding-left:25px; padding-top:6px; margin:0; font-weight:bold; }
+.viewArea .surveyviewer .surveryresult { float:left; width:770px; margin-top:30px; border-top:dotted 1px #dddddd; margin-bottom:30px; }
+.viewArea .surveyviewer .surveryresult .itemlist2 { position:relative;float:left; width:730px; padding:20px; border-bottom:dotted 1px #dddddd; }
+.viewArea .surveyviewer .surveryresult .itemlist2 .itemtitle { display:block; height:30px; color:#000000; }
+.viewArea .surveyviewer .surveryresult .itemlist2 li { display:block; height:30px; padding-left:15px; }
+.viewArea .surveyviewer .surveryresult .itemlist2 li .item { float:left; width:300px; display:block; padding-top:5px; }
+.viewArea .surveyviewer .surveryresult .itemlist2 li .result { float:left; width:60px; display:block; text-align:right; padding-top:5px; padding-right:10px; }
+.viewArea .surveyviewer .surveryresult .itemlist2 li .result .b { font-weight:bold; color:#ff5832; }
+.viewArea .surveyviewer .surveryresult .itemlist2 li .inbtn { width:100px; height:20px; border:none; cursor:pointer; font-size:12px; color:#fff; background-color:#666666; }
+
+.viewArea .regbtn { float:left; position:relative; width:770px; padding:5px 0 50px 0; text-align:center; }
+.viewArea .regbtn .sns { position:absolute; display:block; width:105px; height:50px; top:5px; right:0; }
+
+/* 설문조사 의견보기 레이어 팝업 */
+.viewArea .surveyviewer .surveryresult .itemlist2 .popupSurvey { position:absolute; width:510px; height:290px; border:solid 1px #00a7cd; background:#f2f2f2; top:50px; left:150px; z-index:1; }
+.popupSurvey .top { float:left; width:510px; height:75px; background:url(/resources/images/nanum/surverypop_top.gif) no-repeat; }
+.popupSurvey .top .btnClose { position:absolute; top:21px; left:457px; height:34px; width:34px; }
+.popupSurvey .top .btnClose a { display:block; height:34px; width:34px; text-indent:-2000px; }
+.popupSurvey .relist { float:left; width:510px; padding-top:25px; }
+.popupSurvey .relist .list { float:left; width:440px; height:130px; border:solid 1px #dddddd; background:#FFFFFF; padding:15px; margin-left:20px; overflow:auto; }
+.popupSurvey .relist .list li { float:left; width:400px; height:20px; }
+.popupSurvey .relist .list li .item { float:left; width:300px; display:block; padding-top:5px; }
+.popupSurvey .relist .list li .result { float:left; width:60px; display:block; text-align:right; padding-top:5px; padding-right:10px; }
+.popupSurvey .relist .list li .result .b { font-weight:bold; color:#ff5832; }
+
+
+/* 우편번호 찾기 찾기 레이어 팝업*/
+.popupPost { position:absolute; width:668px; height:398px; border:solid 1px #00a7cd; background:#f2f2f2; top:485px; left:50%; margin-left:-220px; z-index:1; }
+.popupPost .top { float:left; width:668px; height:75px; background:url(/resources/images/member/postsearch_top.gif) no-repeat; }
+.popupPost .top .btnClose { position:absolute; top:20px; left:614px; height:34px; width:34px; }
+.popupPost .top .btnClose a { display:block; height:34px; width:34px; text-indent:-2000px; }
+.popupPost .searchboxarea { float:left; width:650px; height:65px; margin-left:10px; }
+.popupPost .searchboxarea .searchbox { padding-top:20px; height:25px; width:auto; margin:0 auto; }
+.popupPost .searchboxarea .searchbox .txt { float:left; display:block; padding-left:20px; padding-top:5px; width:370px; font-weight:bold; }
+.popupPost .searchboxarea .searchbox .sebox { float:left; width:110px; height:15px; background:#ffffff; border:solid 1px #999999; padding-top:3px; font-size:12px; margin-right:10px; }
+.popupPost .searchboxarea .searchbox .inbtn { width:120px; height:21px; border:none; cursor:pointer; font-size:12px; color:#fff; background-color:#00a7cd; }
+
+.popupPost .searchlist .list { float:left; width:600px; height:210px; border:solid 1px #dddddd; background:#FFFFFF; padding:15px; margin-left:20px; overflow:auto; }
+.popupPost .searchlist .list li { float:left; width:570px; height:20px; }
+
+
+/* 버튼 */
+.inputBtn { width:100px; height:50px; border:none; border-radius:0px; cursor:pointer; font-size:15px; color:#fff; font-weight:bold; }
+.inputBtn.col_ff5832 { background-color:#ff5832; }
+.inputBtn.col_989898 { background-color:#989898; }
+.inputBtn.col_00a7cd { background-color:#00a7cd; }
+.inputBtn.wid200 { background-color:#ff5832; width:200px; }
+.inputBtn.wid20098 { background-color:#989898; width:200px; }
+
+/* FAQ */
+.faqArea { float:left; width:770px; }
+.faqArea .topcnt { float:left; width:760px; height:20px; padding-right:10px; border-bottom:solid 1px #dddddd; text-align:right; font-weight:bold; font-size:11px; color:#898989; }
+.faqArea .topcnt .n { color:#000000; }
+.faqArea .qlist { float:left; width:770px; }
+.faqArea .qlist li { float:left; display:block; width:770px; border-bottom:solid 1px #dddddd; }
+.faqArea .qlist li .qua { float:left; width:705px; display:block; padding-top:11px; padding:20px 0 16px 65px; background:url(/img/front/board/icon_q.gif) 20px 10px no-repeat;  }
+.faqArea .qlist li .ans { float:left; width:705px; display:block; border-top:dotted 1px #dddddd; padding:16px 0 15px 65px; background:url(/img/front/board/icon_a.gif) 20px 10px no-repeat; min-height:100px; }
+
+.faqArea .paging { float:left; width:100%; padding-top:30px; text-align:center; padding-bottom:20px; }
+.faqArea .paging .prev { display:inline; padding-right:10px; }
+.faqArea .paging .next { display:inline; padding-left:10px; }
+.faqArea .paging .pagNum { display:inline; }
+.faqArea .paging .pagNum li { display:inline; }
+.faqArea .paging .pagNum li a { padding:2px 5px; font-size:11px; font-weight:bold; color:#959595; }
+.faqArea .paging .pagNum li a.on { color:#111111; }
+.faqArea .paging img { vertical-align:middle; }

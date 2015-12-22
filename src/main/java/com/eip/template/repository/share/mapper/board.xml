@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="BoardMap">
+
+<!-- 게시판 -->
+	<resultMap id="boardListMap" type="Board"> 
+    	<id property="boardSeq"    column="BOARD_SEQ"/>
+    	<id property="boardTitle"    column="BOARD_TITLE"/>
+    	<id property="boardContents"    column="BOARD_CONTENTS"/>
+    	<id property="boardEtc"    column="BOARD_ETC"/>
+    	<id property="delYn"    column="DEL_YN"/>
+    	<id property="createDt"    column="CREATE_DT"/>
+    	<id property="createId"    column="CREATE_ID"/>
+    	<id property="updateDt"    column="UPDATE_DT"/>
+    	<id property="updateId"    column="UPDATE_ID"/>
+	</resultMap>                         
+                                         
+	<select id="getBoardList" parameterType="map" resultMap="boardListMap">
+		select 
+			BOARD_SEQ      ,
+			BOARD_TITLE    ,
+			BOARD_CONTENTS ,
+			BOARD_ETC      ,
+			DEL_YN         ,
+			CREATE_DT      ,
+			CREATE_ID      ,
+			UPDATE_DT      ,
+			UPDATE_ID
+		from 
+		    tbl_board
+		WHERE 1=1
+		<![CDATA[and	ifnull(DEL_YN,'') <> 'Y']]>
+		<!-- 
+		<choose>
+			<when test="queryColum == 'all'">
+            AND ( m.CREATE_ID like CONCAT('%', #{searchQuery}, '%') OR m.OPER_NAME like CONCAT('%', #{searchQuery}, '%') )
+        	</when>
+        	<when test="queryColum == 'operId'">
+            AND  m.OPER_ID like CONCAT('%', #{searchQuery}, '%') 
+            </when>
+             <when test="queryColum == 'operName'">
+             AND m.OPER_NAME like CONCAT('%', #{searchQuery}, '%')
+             </when>
+        </choose>
+         -->
+  		<if test="orderColumn != null">
+		ORDER BY ${orderColumn} ${orderType}
+		</if> 
+	    <if test="startRow != null">
+	    limit #{startRow}, #{endRow}
+	    </if>
+	</select>
+	
+	<select id="getBoardCount" parameterType="map" resultType="int">
+		select 
+		    count(*)
+		from 
+		    tbl_board m
+		WHERE 1=1
+		<!-- 
+		<choose>
+			<when test="queryColum == 'all'">
+            AND ( m.CREATE_ID like CONCAT('%', #{searchQuery}, '%') OR m.OPER_NAME like CONCAT('%', #{searchQuery}, '%') )
+        	</when>
+        	<when test="queryColum == 'operId'">
+            AND  m.OPER_ID like CONCAT('%', #{searchQuery}, '%') 
+            </when>
+             <when test="queryColum == 'operName'">
+             AND m.OPER_NAME like CONCAT('%', #{searchQuery}, '%')
+             </when>
+        </choose>
+         -->
+	</select>
+	
+	
+	<select id="getBoard" parameterType="map" resultMap="boardListMap">
+		select 
+			BOARD_SEQ      ,
+			BOARD_TITLE    ,
+			BOARD_CONTENTS ,
+			BOARD_ETC      ,
+			DEL_YN         ,
+			CREATE_DT      ,
+			CREATE_ID      ,
+			UPDATE_DT      ,
+			UPDATE_ID
+		from 
+		    tbl_board m
+		WHERE 1=1
+		 <if test="boardSeq != null and boardSeq != ''">
+		 and m.BOARD_SEQ = #{boardSeq}
+		 </if>  
+	</select>
+	
+	
+	<insert id="insertBoard" parameterType="Board" useGeneratedKeys="true" keyProperty="boardSeq">
+        INSERT INTO tbl_board
+        		(
+	                BOARD_SEQ      ,
+					BOARD_TITLE    ,
+					BOARD_CONTENTS ,
+					BOARD_ETC      ,
+					DEL_YN         ,
+					CREATE_DT      ,
+					CREATE_ID      ,
+					UPDATE_DT      ,
+					UPDATE_ID
+       			)
+        VALUES
+        		(
+        			#{boardSeq} ,
+        			#{boardTitle} ,
+        			#{boardContents} ,
+        			#{boardEtc} ,
+        			#{delYn} ,
+        			#{createDt} ,
+        			#{createId} ,
+        			#{updateDt} ,
+        			#{updateId} 
+        		)
+    </insert>
+    
+    <update id="updateBoard" parameterType="Board"> 
+        UPDATE 
+        	tbl_board 
+        SET					
+        	BOARD_TITLE    =   #{boardTitle} ,
+        	BOARD_CONTENTS    =   #{boardContents} ,
+        	BOARD_ETC    =   #{boardEtc} ,
+        	DEL_YN    =   #{delYn} ,
+        	UPDATE_DT    =   #{updateDt} ,
+        	UPDATE_ID    =   #{updateId} 
+        WHERE
+        	BOARD_SEQ=#{boardSeq} 
+    </update>
+ 
+    <update id="deleteBoard" parameterType="Board">
+        UPDATE 
+        	tbl_board 
+        SET	
+        	DEL_YN = 'Y'			
+        WHERE
+        	BOARD_SEQ=#{boardSeq}
+    </update>
+    
+<!-- 게시판 파일-->
+	<resultMap id="boardFileListMap" type="BoardFile"> 
+    	<id property="boardSeq"    column="BOARD_SEQ"/>
+    	<id property="fileSeq"    column="FILE_SEQ"/>
+    	<id property="fileName"    column="FILE_NAME"/>
+    	<id property="filePath"    column="FILE_PATH"/>
+    	<id property="fileDiv"    column="FILE_DIV"/>
+    	<id property="delYn"    column="DEL_YN"/>
+    	<id property="createDt"    column="CREATE_DT"/>
+    	<id property="createId"    column="CREATE_ID"/>
+    	<id property="updateDt"    column="UPDATE_DT"/>
+    	<id property="updateId"    column="UPDATE_ID"/>
+	</resultMap>                         
+                                         
+	<select id="getBoardFileList" parameterType="BoardFile" resultMap="boardFileListMap">
+		select 
+			BOARD_SEQ ,
+			FILE_SEQ ,
+			FILE_NAME ,
+			FILE_PATH ,
+			FILE_DIV ,
+			DEL_YN ,
+			CREATE_DT ,
+			CREATE_ID ,
+			UPDATE_DT ,
+			UPDATE_ID 
+		from 
+		    tbl_board_file
+		WHERE 1=1
+		<![CDATA[and	ifnull(DEL_YN,'') <> 'Y']]>
+		<!-- 
+		<choose>
+			<when test="queryColum == 'all'">
+            AND ( m.CREATE_ID like CONCAT('%', #{searchQuery}, '%') OR m.OPER_NAME like CONCAT('%', #{searchQuery}, '%') )
+        	</when>
+        	<when test="queryColum == 'operId'">
+            AND  m.OPER_ID like CONCAT('%', #{searchQuery}, '%') 
+            </when>
+             <when test="queryColum == 'operName'">
+             AND m.OPER_NAME like CONCAT('%', #{searchQuery}, '%')
+             </when>
+        </choose>
+         -->
+        <if test="boardSeq != null">
+			AND BOARD_SEQ = #{boardSeq}
+		</if> 
+	</select>
+	
+	<select id="getBoardFileCount" parameterType="map" resultType="int">
+		select 
+		    count(*)
+		from 
+		    tbl_board_file f
+		WHERE 1=1
+		<![CDATA[and	ifnull(DEL_YN,'') <> 'Y']]>
+		<!-- 
+		<choose>
+			<when test="queryColum == 'all'">
+            AND ( m.CREATE_ID like CONCAT('%', #{searchQuery}, '%') OR m.OPER_NAME like CONCAT('%', #{searchQuery}, '%') )
+        	</when>
+        	<when test="queryColum == 'operId'">
+            AND  m.OPER_ID like CONCAT('%', #{searchQuery}, '%') 
+            </when>
+             <when test="queryColum == 'operName'">
+             AND m.OPER_NAME like CONCAT('%', #{searchQuery}, '%')
+             </when>
+        </choose>
+         -->
+	</select>
+	
+	
+	<select id="getBoardFile" parameterType="map" resultMap="boardFileListMap">
+		select 
+			BOARD_SEQ  , 
+			FILE_SEQ  , 
+			FILE_NAME  , 
+			FILE_PATH  , 
+			FILE_DIV  , 
+			DEL_YN  , 
+			CREATE_DT  , 
+			CREATE_ID  , 
+			UPDATE_DT  , 
+			UPDATE_ID  
+		from 
+		    tbl_board_file m
+		WHERE 1=1
+		<![CDATA[and	ifnull(DEL_YN,'') <> 'Y']]>
+		 <if test="boardSeq != null and boardSeq != ''">
+		 and m.BOARD_SEQ = #{boardSeq}
+		 </if>  
+		 <if test="fileSeq != null and fileSeq != ''">
+		 and m.FILE_SEQ = #{fileSeq}
+		 </if>  
+	</select>
+	
+	
+	<insert id="insertBoardFile" parameterType="BoardFile">
+        INSERT INTO tbl_board_file
+        		(
+	                BOARD_SEQ ,
+	                FILE_SEQ  ,
+	                FILE_NAME ,
+	                FILE_PATH ,
+	                FILE_DIV  ,
+	                DEL_YN    ,
+	                CREATE_DT ,
+	                CREATE_ID ,
+	                UPDATE_DT ,
+	                UPDATE_ID
+       			)
+        VALUES
+        		(
+        			#{boardSeq} ,
+        			(SELECT ifnull(max(FILE_SEQ),0) + 1 FROM (SELECT * FROM tbl_board_file) t WHERE BOARD_SEQ = #{boardSeq}),
+        			#{fileName} ,
+        			#{filePath} ,
+        			#{fileDiv} ,
+        			#{delYn} ,
+        			#{createDt} ,
+        			#{createId} ,
+        			#{updateDt} ,
+        			#{updateId} 
+        		)
+    </insert>
+    
+    <update id="updateBoardFile" parameterType="BoardFile"> 
+        UPDATE 
+        	tbl_board_file 
+        SET					
+        	FILE_NAME    =   #{fileName} ,
+        	FILE_PATH    =   #{filePath} ,
+        	FILE_DIV    =   #{fileDiv} ,
+        	DEL_YN    =   #{delYn} ,
+        	UPDATE_DT    =   #{updateDt} ,
+        	UPDATE_ID    =   #{updateId} 
+        WHERE
+        	BOARD_SEQ=#{boardSeq}
+        AND
+        	FILE_SEQ =#{fileSeq}
+    </update>
+ 
+    <update id="deleteBoardFile" parameterType="BoardFile">
+        UPDATE 
+        	tbl_board_file 
+        SET
+        	DEL_YN    =   'Y'
+        WHERE
+        	1=1
+        <if test="boardSeq != null and boardSeq != ''">
+        AND BOARD_SEQ=#{boardSeq}
+        </if>
+        <if test="fileSeq != null and fileSeq != ''">
+        AND FILE_SEQ =#{fileSeq} 
+        </if>	
+    </update>    
+    
+<!-- 게시판 댓글-->
+	<resultMap id="boardReplyListMap" type="BoardReply"> 
+    	<id property="boardSeq"    column="BOARD_SEQ"/>
+    	<id property="replySeq"    column="REPLY_SEQ"/>
+    	<id property="replyContents"    column="REPLY_CONTENTS"/>
+    	<id property="replyNicknm"    column="REPLY_NICKNM"/>
+    	<id property="replyPwd"    column="REPLY_PWD"/>
+    	<id property="delYn"    column="DEL_YN"/>
+    	<id property="createDt"    column="CREATE_DT"/>
+    	<id property="createId"    column="CREATE_ID"/>
+    	<id property="updateDt"    column="UPDATE_DT"/>
+    	<id property="updateId"    column="UPDATE_ID"/>
+	</resultMap>                         
+                                         
+	<select id="getBoardReplyList" parameterType="BoardReply" resultMap="boardReplyListMap">
+		select 
+			BOARD_SEQ      ,
+			REPLY_SEQ      ,
+			REPLY_CONTENTS ,
+			REPLY_NICKNM   ,
+			REPLY_PWD      ,
+			DEL_YN         ,
+			CREATE_DT      ,
+			CREATE_ID      ,
+			UPDATE_DT      ,
+			UPDATE_ID
+		from 
+		    tbl_board_reply
+		WHERE 1=1
+		<![CDATA[and	ifnull(DEL_YN,'') <> 'Y']]>
+  		<if test="boardSeq != null">
+		AND BOARD_SEQ = #{boardSeq}
+		</if> 
+	</select>
+	
+	<select id="getBoardReplyCount" parameterType="map" resultType="int">
+		select 
+		    count(*)
+		from 
+		    tbl_board_reply r
+		WHERE 1=1
+		<![CDATA[and	ifnull(DEL_YN,'') <> 'Y']]>
+  		<if test="boardSeq != null">
+		AND BOARD_SEQ = #{boardSeq}
+		</if> 
+	</select>
+	
+	
+	<select id="getBoardReply" parameterType="map" resultMap="boardReplyListMap">
+		select 
+			BOARD_SEQ      ,
+			REPLY_SEQ      ,
+			REPLY_CONTENTS ,
+			REPLY_NICKNM   ,
+			REPLY_PWD      ,
+			DEL_YN         ,
+			CREATE_DT      ,
+			CREATE_ID      ,
+			UPDATE_DT      ,
+			UPDATE_ID
+		from 
+		    tbl_board_reply m
+		WHERE 1=1
+		 <if test="boardSeq != null and boardSeq != ''">
+		 and m.BOARD_SEQ = #{boardSeq}
+		 </if>  
+		 <if test="replySeq != null and replySeq != ''">
+		 and m.REPLY_SEQ = #{replySeq}
+		 </if>
+		<![CDATA[and	ifnull(DEL_YN,'') <> 'Y']]>
+	</select>
+	
+	
+	<insert id="insertBoardReply" parameterType="BoardReply">
+        INSERT INTO tbl_board_reply
+        		(
+	                BOARD_SEQ      ,
+	                REPLY_SEQ      ,
+	                REPLY_CONTENTS ,
+	                REPLY_NICKNM   ,
+	                REPLY_PWD      ,
+	                DEL_YN         ,
+	                CREATE_DT      ,
+	                CREATE_ID      ,
+	                UPDATE_DT      ,
+	                UPDATE_ID
+       			)
+        VALUES
+        		(
+        			#{boardSeq} ,
+        			(SELECT ifnull(max(REPLY_SEQ),0) + 1 FROM (SELECT * FROM tbl_board_reply) t WHERE BOARD_SEQ = #{boardSeq}),
+        			#{replyContents} ,
+        			#{replyNicknm} ,
+        			#{replyPwd} ,
+        			#{delYn} ,
+        			#{createDt} ,
+        			#{createId} ,
+        			#{updateDt} ,
+        			#{updateId} 
+        		)
+    </insert>
+    
+    <update id="updateBoardReply" parameterType="BoardReply"> 
+        UPDATE 
+        	tbl_board_reply 
+        SET					
+        	REPLY_CONTENTS    =   #{replyContents} ,
+        	REPLY_NICKNM    =   #{replyNicknm} ,
+        	REPLY_PWD    =   #{replyPwd} ,
+        	DEL_YN    =   #{delYn} ,
+        	UPDATE_DT    =   #{updateDt} ,
+        	UPDATE_ID    =   #{updateId}
+        WHERE
+        	BOARD_SEQ=#{boardSeq}
+        AND
+        	REPLY_SEQ =#{replySeq}
+    </update>
+ 
+    <update id="deleteBoardReply" parameterType="BoardReply">
+        UPDATE 
+        	tbl_board_reply 
+        SET
+        	DEL_YN    =   'Y'
+        WHERE
+         1=1
+		 <if test="boardSeq != null and boardSeq != ''">
+		 and BOARD_SEQ = #{boardSeq}
+		 </if>  
+		 <if test="replySeq != null and replySeq != ''">
+		 and REPLY_SEQ = #{replySeq}
+		 </if>
+    </update>      
+    
+</mapper>
+
+

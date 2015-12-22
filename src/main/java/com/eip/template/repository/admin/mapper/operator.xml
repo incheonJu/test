@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="OperatorMap">
+	<resultMap id="operatorListMap" type="Operator"> 
+    	<id property="operId"    column="OPER_ID"/>
+    	<id property="operPwd"   column="OPER_PWD"/>
+    	<id property="operName"  column="OPER_NAME"/>
+    	<id property="email"     column="EMAIL"/>
+    	<id property="tel1"      column="TEL1"/>
+    	<id property="tel2"      column="TEL2"/>
+    	<id property="tel3"      column="TEL3"/>
+    	<id property="mobile1"   column="MOBILE1"/>
+    	<id property="mobile2"   column="MOBILE2"/>
+    	<id property="mobile3"   column="MOBILE3"/>
+    	<id property="zipCode"   column="ZIP_CODE"/>
+    	<id property="addr1"     column="ADDR1"/>
+    	<id property="addr2"     column="ADDR2"/>
+    	<id property="operState" column="OPER_STATE"/>
+    	<id property="operStateName" column="operStateName"/>
+    	<id property="priv01"    column="PRIV01"/>
+    	<id property="priv02"    column="PRIV02"/>
+    	<id property="priv03"    column="PRIV03"/>
+    	<id property="priv04"    column="PRIV04"/>
+    	<id property="priv05"    column="PRIV05"/>
+    	<id property="createDt"  column="CREATE_DT"/>
+    	<id property="createId"  column="CREATE_ID"/>
+    	<id property="updateDt"  column="UPDATE_DT"/>
+    	<id property="updateId"  column="UPDATE_ID"/>
+	</resultMap>                         
+                                         
+	<select id="getOperatorList" parameterType="map" resultMap="operatorListMap">
+		select 
+			m.OPER_ID	  , 
+			m.OPER_PWD    , 
+			m.OPER_NAME   , 
+			m.EMAIL       , 
+			m.TEL1        , 
+			m.TEL2        , 
+			m.TEL3        , 
+			m.MOBILE1     , 
+			m.MOBILE2     , 
+			m.MOBILE3     , 
+			m.ZIP_CODE    , 
+			m.ADDR1       , 
+			m.ADDR2       , 
+			m.OPER_STATE  , 
+			case m.OPER_STATE when 0 then '승인 대기' when 1 then '승인' when 2 then '탈퇴회원' end operStateName, <!-- 공통코드로 변경 -->
+			m.PRIV01      , 
+			m.PRIV02      , 
+			m.PRIV03      , 
+			m.PRIV04      , 
+			m.PRIV05      , 
+			m.CREATE_DT   , 
+			m.CREATE_ID   , 
+			m.UPDATE_DT   , 
+			m.UPDATE_ID
+		from 
+		    tbl_operator m
+		WHERE 1=1
+		<choose>
+			<when test="queryColum == 'all'">
+            AND ( m.OPER_ID like CONCAT('%', #{searchQuery}, '%') OR m.OPER_NAME like CONCAT('%', #{searchQuery}, '%') )
+        	</when>
+        	<when test="queryColum == 'operId'">
+            AND  m.OPER_ID like CONCAT('%', #{searchQuery}, '%') 
+            </when>
+             <when test="queryColum == 'operName'">
+             AND m.OPER_NAME like CONCAT('%', #{searchQuery}, '%')
+             </when>
+        </choose>
+        <if test="priv01 != 0 ||  priv02 != 0 || priv03 != 0 || priv04 != 0 || priv05 != 0 ">
+    		AND (
+    		<if test="priv01 != 0 ">
+    			m.PRIV01 = 1
+    			<if test="priv02 != 0 || priv03 != 0 || priv04 != 0 || priv05 != 0">
+    				 OR 
+    			</if>
+    		</if>
+    		<if test="priv02 != 0 ">
+    			m.PRIV02 = 1
+    			<if test="priv03 != 0 || priv04 != 0 || priv05 != 0">
+    				OR
+   				</if>
+			</if>
+    		<if test="priv03 != 0 ">
+    			m.PRIV03 = 1
+    			<if test="priv04 != 0 || priv05 != 0">
+    				OR
+   				</if>
+			</if>
+    		<if test="priv04 != 0 ">
+    			m.PRIV04 = 1
+    			<if test="priv05 != 0">
+    				OR
+   				</if>
+			</if>
+    		<if test="priv05 != 0 ">
+    			m.PRIV05 = 1
+			</if>
+    		)
+  		</if>
+    	
+    	<if test="state01 != 0 ||  state02 != 0 || state03 != 0 ">
+    		AND (
+    		<if test="state01 != 0 ">
+    			m.OPER_STATE = 0
+    			<if test="state02 != 0 || state03 != 0 ">
+    				 OR 
+    			</if>
+    		</if>
+    		<if test="state02 != 0 ">
+    			m.OPER_STATE = 1
+    			<if test="state03 != 0 ">
+    				OR
+   				</if>
+			</if>
+    		<if test="state03 != 0 ">
+    			m.OPER_STATE = 2
+    		</if>
+    		)
+  		</if>
+  		<if test="orderColumn != null">
+		ORDER BY ${orderColumn} ${orderType}
+		</if> 
+	    <if test="startRow != null">
+	    limit #{startRow}, #{endRow}
+	    </if>
+	</select>
+	
+	<select id="getOperatorCount" parameterType="map" resultType="int">
+		select 
+		    count(*)
+		from 
+		    tbl_operator m
+		WHERE 1=1
+		<choose>
+			<when test="queryColum == 'all'">
+            AND ( m.OPER_ID like CONCAT('%', #{searchQuery}, '%') OR m.OPER_NAME like CONCAT('%', #{searchQuery}, '%') )
+        	</when>
+        	<when test="queryColum == 'operId'">
+            AND  m.OPER_ID like CONCAT('%', #{searchQuery}, '%') 
+            </when>
+             <when test="queryColum == 'operName'">
+             AND m.OPER_NAME like CONCAT('%', #{searchQuery}, '%')
+             </when>
+        </choose>
+        <if test="priv01 != 0 ||  priv02 != 0 || priv03 != 0 ">
+    		AND (
+    		<if test="priv01 != 0 ">
+    			m.PRIV01 = 1
+    			<if test="priv02 != 0 || priv03 != 0 ">
+    				 OR 
+    			</if>
+    		</if>
+    		<if test="priv02 != 0 ">
+    			m.PRIV02 = 1
+    			<if test="priv03 != 0 ">
+    				OR
+   				</if>
+			</if>
+    		<if test="priv03 != 0 ">
+    			m.PRIV03 = 1
+    		</if>
+    		)
+  		</if>
+    	
+    	<if test="state01 != 0 ||  state02 != 0 || state03 != 0 ">
+    		AND (
+    		<if test="state01 != 0 ">
+    			m.OPER_STATE = 0
+    			<if test="state02 != 0 || state03 != 0 ">
+    				 OR 
+    			</if>
+    		</if>
+    		<if test="state02 != 0 ">
+    			m.OPER_STATE = 1
+    			<if test="state03 != 0 ">
+    				OR
+   				</if>
+			</if>
+    		<if test="state03 != 0 ">
+    			m.OPER_STATE = 2
+    		</if>
+    		)
+  		</if>
+	</select>
+	
+	
+	<select id="getOperator" parameterType="Operator" resultMap="operatorListMap">
+		select 
+			m.OPER_ID	  , 
+			m.OPER_PWD    , 
+			m.OPER_NAME   , 
+			m.EMAIL       , 
+			m.TEL1        , 
+			m.TEL2        , 
+			m.TEL3        , 
+			m.MOBILE1     , 
+			m.MOBILE2     , 
+			m.MOBILE3     , 
+			m.ZIP_CODE    , 
+			m.ADDR1       , 
+			m.ADDR2       , 
+			m.OPER_STATE  , 
+			m.PRIV01      , 
+			m.PRIV02      , 
+			m.PRIV03      , 
+			m.PRIV04      , 
+			m.PRIV05      , 
+			m.CREATE_DT   , 
+			m.CREATE_ID   , 
+			m.UPDATE_DT   , 
+			m.UPDATE_ID
+		from 
+		    tbl_operator m
+		WHERE 1=1
+		 <if test="operId != null and operId != ''">
+		 and m.OPER_ID = #{operId}
+		 </if>  
+		 <if test="operName != null and operName != ''">
+		 and m.OPER_NAME = #{operName}
+		 </if>  
+		 <if test="email != null and email != ''">
+		 and m.EMAIL = #{email}
+		 </if>  
+	</select>
+	
+	
+	<insert id="insertOperator" parameterType="Operator"> <!-- useGeneratedKeys="true" keyProperty="id"> -->
+        INSERT INTO tbl_operator
+        		(
+                  OPER_ID , 
+                  OPER_PWD   ,
+                  OPER_NAME  ,
+                  EMAIL      ,
+                  TEL1       ,
+                  TEL2       ,
+                  TEL3       ,
+                  MOBILE1    ,
+                  MOBILE2    ,
+                  MOBILE3    ,
+                  ZIP_CODE   ,
+                  ADDR1      ,
+                  ADDR2      ,
+                  OPER_STATE ,
+                  PRIV01     ,
+                  PRIV02     ,
+                  PRIV03     ,
+                  PRIV04     ,
+                  PRIV05     ,
+                  UPDATE_DT  ,
+                  UPDATE_ID  
+       			)
+        VALUES
+        		(
+        			#{operId} ,
+        			#{operPwd} , 
+					#{operName} , 
+					#{email}, 
+					#{tel1}, 
+					#{tel2}, 
+					#{tel3}, 
+					#{mobile1}, 
+					#{mobile2}, 
+					#{mobile3}, 
+					#{zipCode} , 
+					#{addr1}, 
+					#{addr2}, 
+					#{operState} , 
+					#{priv01}, 
+					#{priv02}, 
+					#{priv03}, 
+					#{priv04}, 
+					#{priv05}, 
+					#{updateDt} , 
+					#{updateId}   
+        		)
+    </insert>
+    
+    <update id="updateOperator" parameterType="Operator"> 
+        UPDATE 
+        	tbl_operator 
+        SET					
+        	OPER_PWD    =   #{operPwd} ,
+        	OPER_NAME   =   #{operName} ,
+        	EMAIL       =   #{email},
+        	TEL1        =   #{tel1},
+        	TEL2        =   #{tel2},
+        	TEL3        =   #{tel3},
+        	MOBILE1     =   #{mobile1},
+        	MOBILE2     =   #{mobile2},
+        	MOBILE3     =   #{mobile3},
+        	ZIP_CODE    =   #{zipCode} ,
+        	ADDR1       =   #{addr1},
+        	ADDR2       =   #{addr2},
+        	OPER_STATE  =   #{operState} ,
+        	PRIV01      =   #{priv01},
+        	PRIV02      =   #{priv02},
+        	PRIV03      =   #{priv03},
+        	PRIV04      =   #{priv04},
+        	PRIV05      =   #{priv05},
+        	UPDATE_DT   =   #{updateDt} ,
+        	UPDATE_ID   =   #{updateId}
+        WHERE
+        	OPER_ID=#{operId} 
+    </update>
+ 
+    <delete id="deleteOperator" parameterType="String">
+        DELETE FROM
+        	tbl_operator
+        WHERE
+        	OPER_ID=#{value}
+    </delete>
+</mapper>
+
+

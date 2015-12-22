@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="QnaMap">
+
+<!-- 게시판 -->
+	<resultMap id="qnaListMap" type="Qna"> 
+    	<id property="qnaSeq"    column="QNA_SEQ"/>
+    	<id property="qnaRefSeq"    column="QNA_REF_SEQ"/>
+    	<id property="qnaDepth"    column="QNA_DEPTH"/>
+    	<id property="qnaTitle"    column="QNA_TITLE"/>
+    	<id property="qnaContents"    column="QNA_CONTENTS"/>
+    	<id property="createName"    column="CREATE_NAME"/>
+    	<id property="createEmail"    column="CREATE_EMAIL"/>
+    	<id property="createTel1"    column="CREATE_TEL1"/>
+    	<id property="createTel2"    column="CREATE_TEL2"/>
+    	<id property="createTel3"    column="CREATE_TEL3"/>
+    	<id property="createPwd"    column="CREATE_PWD"/>
+    	<id property="openYn"    column="OPEN_YN"/>
+    	<id property="delYn"    column="DEL_YN"/>
+    	<id property="createDt"    column="CREATE_DT"/>
+    	<id property="createId"    column="CREATE_ID"/>
+    	<id property="updateDt"    column="UPDATE_DT"/>
+    	<id property="updateId"    column="UPDATE_ID"/>
+    	<id property="replyYn"    column="REPLY_YN"/>
+	</resultMap>                         
+                                         
+	<select id="getQnaList" parameterType="map" resultMap="qnaListMap">
+		select 
+			aa.QNA_SEQ      ,
+			aa.QNA_REF_SEQ      ,
+			aa.QNA_DEPTH      ,
+			aa.QNA_TITLE    ,
+			aa.QNA_CONTENTS ,
+			aa.CREATE_NAME      ,
+			aa.CREATE_EMAIL      ,
+			aa.CREATE_TEL1      ,
+			aa.CREATE_TEL2      ,
+			aa.CREATE_TEL3      ,
+			aa.CREATE_PWD      ,
+			aa.OPEN_YN         ,
+			aa.DEL_YN         ,
+			aa.CREATE_DT      ,
+			aa.CREATE_ID      ,
+			aa.UPDATE_DT      ,
+			aa.UPDATE_ID      ,
+			if(bb.qna_seq is null,'N','Y') REPLY_YN
+		from 
+		    (select * from tbl_qna where qna_depth=0) aa
+        	LEFT OUTER JOIN (select * from tbl_qna where qna_depth=1) bb
+    	ON aa.qna_seq = bb.qna_ref_seq
+		WHERE 1=1
+		<![CDATA[and	ifnull(aa.DEL_YN,'') <> 'Y']]>
+		<!-- 
+		<choose>
+			<when test="queryColum == 'all'">
+            AND ( m.CREATE_ID like CONCAT('%', #{searchQuery}, '%') OR m.OPER_NAME like CONCAT('%', #{searchQuery}, '%') )
+        	</when>
+        	<when test="queryColum == 'operId'">
+            AND  m.OPER_ID like CONCAT('%', #{searchQuery}, '%') 
+            </when>
+             <when test="queryColum == 'operName'">
+             AND m.OPER_NAME like CONCAT('%', #{searchQuery}, '%')
+             </when>
+        </choose>
+         -->
+  		<if test="orderColumn != null">
+		ORDER BY ${orderColumn} ${orderType}
+		</if> 
+	    <if test="startRow != null">
+	    limit #{startRow}, #{endRow}
+	    </if>
+	</select>
+	
+	<select id="getQnaCount" parameterType="map" resultType="int">
+		select 
+		    count(*)
+		from 
+		    tbl_qna m
+		WHERE 1=1
+		 and QNA_DEPTH = 0
+		<![CDATA[and	ifnull(DEL_YN,'') <> 'Y']]>
+		<!-- 
+		<choose>
+			<when test="queryColum == 'all'">
+            AND ( m.CREATE_ID like CONCAT('%', #{searchQuery}, '%') OR m.OPER_NAME like CONCAT('%', #{searchQuery}, '%') )
+        	</when>
+        	<when test="queryColum == 'operId'">
+            AND  m.OPER_ID like CONCAT('%', #{searchQuery}, '%') 
+            </when>
+             <when test="queryColum == 'operName'">
+             AND m.OPER_NAME like CONCAT('%', #{searchQuery}, '%')
+             </when>
+        </choose>
+         -->
+	</select>
+	
+	
+	<select id="getQna" parameterType="map" resultMap="qnaListMap">
+		select 
+			QNA_SEQ      ,
+			QNA_REF_SEQ      ,
+			QNA_DEPTH      ,
+			QNA_TITLE    ,
+			QNA_CONTENTS ,
+			CREATE_NAME      ,
+			CREATE_EMAIL      ,
+			CREATE_TEL1      ,
+			CREATE_TEL2      ,
+			CREATE_TEL3      ,
+			CREATE_PWD      ,
+			OPEN_YN         ,
+			DEL_YN         ,
+			CREATE_DT      ,
+			CREATE_ID      ,
+			UPDATE_DT      ,
+			UPDATE_ID
+		from 
+		    tbl_qna m
+		WHERE 1=1
+		 <if test="qnaSeq != null and qnaSeq != ''">
+		 and m.QNA_SEQ = #{qnaSeq}
+		 </if> 
+		 <if test="createPwd != null and createPwd != ''">
+		 and m.CREATE_PWD = #{createPwd}
+		 </if>
+	</select>
+	
+	
+	<insert id="insertQna" parameterType="Qna" useGeneratedKeys="true" keyProperty="qnaSeq">
+        INSERT INTO tbl_qna
+        		(
+	                QNA_SEQ      ,
+					QNA_REF_SEQ      ,
+					QNA_DEPTH      ,
+					QNA_TITLE    ,
+					QNA_CONTENTS ,
+					CREATE_NAME      ,
+					CREATE_EMAIL      ,
+					CREATE_TEL1      ,
+					CREATE_TEL2      ,
+					CREATE_TEL3      ,
+					CREATE_PWD      ,
+					OPEN_YN         ,
+					DEL_YN         ,
+					CREATE_DT      ,
+					CREATE_ID      ,
+					UPDATE_DT      ,
+					UPDATE_ID
+       			)
+        VALUES
+        		(
+        			#{qnaSeq} ,    
+					#{qnaRefSeq} ,  
+					#{qnaDepth} ,   
+					#{qnaTitle} ,   
+					#{qnaContents} ,
+					#{createName},
+					#{createEmail} ,
+					#{createTel1} , 
+					#{createTel2} , 
+					#{createTel3} , 
+					#{createPwd} ,  
+					#{openYn} ,    
+					#{delYn} ,    
+					#{createDt} ,   
+					#{createId} ,   
+					#{updateDt} ,   
+					#{updateId}        
+        		)
+    </insert>
+    
+    <update id="updateQna" parameterType="Qna"> 
+        UPDATE 
+        	tbl_qna 
+        SET					
+        	QNA_SEQ      = 		#{qnaSeq} ,    
+			QNA_REF_SEQ  = 		#{qnaRefSeq} ,  
+			QNA_DEPTH    = 		#{qnaDepth} ,   
+			QNA_TITLE    = 		#{qnaTitle} ,   
+			QNA_CONTENTS = 		#{qnaContents} ,
+			CREATE_NAME = 		#{createName} ,
+			CREATE_EMAIL = 		#{createEmail} ,
+			CREATE_TEL1  = 		#{createTel1} , 
+			CREATE_TEL2  = 		#{createTel2} , 
+			CREATE_TEL3  = 		#{createTel3} , 
+			CREATE_PWD   = 		#{createPwd} ,  
+			OPEN_YN      = 		#{openYn} ,    
+			DEL_YN       = 		#{delYn} ,    
+			UPDATE_DT    = 		#{updateDt} ,   
+			UPDATE_ID    = 		#{updateId}     
+        WHERE
+        	QNA_SEQ = #{qnaSeq} 
+    </update>
+ 
+    <update id="deleteQna" parameterType="Qna">
+        UPDATE 
+        	tbl_qna 
+        SET	
+        	DEL_YN = 'Y'			
+        WHERE
+        	QNA_SEQ=#{qnaSeq}
+    </update>
+
+<!--  답변  -->
+
+<select id="getReplyQna" parameterType="map" resultMap="qnaListMap">
+		select 
+			QNA_SEQ      ,
+			QNA_REF_SEQ      ,
+			QNA_DEPTH      ,
+			QNA_TITLE    ,
+			QNA_CONTENTS ,
+			CREATE_NAME      ,
+			CREATE_EMAIL      ,
+			CREATE_TEL1      ,
+			CREATE_TEL2      ,
+			CREATE_TEL3      ,
+			CREATE_PWD      ,
+			OPEN_YN         ,
+			DEL_YN         ,
+			CREATE_DT      ,
+			CREATE_ID      ,
+			UPDATE_DT      ,
+			UPDATE_ID
+		from 
+		    tbl_qna m
+		WHERE 1=1
+		 <if test="qnaRefSeq != null and qnaRefSeq != ''">
+		 and m.QNA_REF_SEQ = #{qnaRefSeq}
+		 </if>  
+		 and m.QNA_DEPTH = 1
+	</select>
+    
+</mapper>
+
+

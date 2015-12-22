@@ -1,0 +1,44 @@
+@charset "utf-8";
+
+@charset "utf-8";
+
+body {margin:0; padding:0; background-color:#fff;}
+body {font-size:12px; font-family:"맑은 고딕"; color:#666; }
+table,th,td { line-height:160%; }
+img,fieldset {border:0; vertical-align:top;}      
+dl,ul,ol,li {list-style: none;}
+h1,h2,h3,h4,h5,h6 {font-weight:normal;}
+h1,h2,h3,h4,h5,h6,dl,dt,dd,ul,li,ol,th,td,p,form,fieldset,legend, p {margin:0; padding:0;}
+table {border-collapse:collapse;}
+label {cursor:pointer;}
+input, select, textarea { font-family:"맑은 고딕";}
+input[readonly]{background-color:#e5e7ed;}
+address, caption, em {font-weight:normal; font-style:normal;}
+
+.clear{display:block; float:none; clear:both; height:0; width:100%; font-size:0 !important; line-height:0 !important; overflow:hidden; margin:0 !important; padding:0 !important;}
+
+.wrappedJqGridCell{ text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+
+input.u1 {
+    padding: 6px 12px;
+    font-size: 1.6em;
+    color: #787878;
+    letter-spacing: -0.02em;
+    text-shadow: 0px 1px 0px #fff;
+    outline: none;
+    background: -webkit-gradient(linear, left top, left bottom, from(#e0e0e0), to(#ffffff));
+    background: -moz-linear-gradient(top,  #e0e0e0,  #ffffff);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #717171;
+    margin-right: 20px;
+    -webkit-box-shadow: 1px 1px 0px #efefef;
+    -moz-box-shadow: 1px 1px 0px #efefef;
+    box-shadow:  1px 1px 0px #efefef;
+}
+input#submitbtn { font-size: 1.3em; padding: 4px 9px; font-family: Arial, Helvetica, sans-serif; letter-spacing: -0.05em; color: #444; }
+input.fail { -webkit-box-shadow: 0px 0px 5px #ff4848; -moz-box-shadow: 0px 0px 5px #ff4848; box-shadow: 0px 0px 5px #ff4848; }
+input:focus { -webkit-box-shadow: 0px 0px 5px #007eff; -moz-box-shadow: 0px 0px 5px #007eff; box-shadow: 0px 0px 5px #007eff; }
+
+textarea { resize: none; }

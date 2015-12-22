@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+
+<mapper namespace="VisitorMap">
+
+	<resultMap  id="visitListMap" type="Visitor">
+		<id column="VISIT_DATE" property="visitDate"/>
+		<result column="VISIT_COUNT" property="visitCount"/>
+		<result column="FONT_VISIT_COUNT" property="frontVisitCount"/>
+		<result column="BACKOFFICE_VISIT_COUNT" property="backofficeVisitCount"/>
+		<result column="dd" property="dd"/>
+		<result column="mm" property="mm"/>
+		<result column="yyyy" property="yyyy"/>
+	</resultMap>
+
+	<select id="visitorList" parameterType="map" resultMap="visitListMap">
+		select 
+		        VISIT_DATE,
+		        VISIT_COUNT,
+		        FRONT_VISIT_COUNT,
+		        BACKOFFICE_VISIT_COUNT
+		from 
+		    tbl_visitor v
+		 WHERE   
+		 	1=1
+		 <if test="day != null">
+		 AND 	DATE_FORMAT( VISIT_DATE ,'%Y%m%d') = #{day}
+		 </if>
+		 <if test="orderColumn != null">
+		 ORDER BY ${orderColumn} ${orderType} 
+		 </if>
+		 <if test="startRow != null">
+		 limit #{startRow}, #{endRow}
+		 </if>
+	</select>
+	
+	<select id="visitorCount" parameterType="java.lang.String" resultType="int">
+		select 
+		    count(*)
+		 from 
+		    tbl_visitor a
+		 WHERE   
+		  	1=1
+		 AND 	DATE_FORMAT( VISIT_DATE ,'%Y%m%d') = #{day}
+	</select>
+	
+	<!--  연간 방문자 통계 -->
+	<select id="visitorYearStatistics" parameterType="map" resultMap="visitListMap">
+	select 
+        ifnull(VISIT_COUNT,0) VISIT_COUNT,
+        ifnull(FRONT_VISIT_COUNT,0) FRONT_VISIT_COUNT,
+        ifnull(BACKOFFICE_VISIT_COUNT,0) BACKOFFICE_VISIT_COUNT,
+        am.yyyy
+	from 
+    (
+    	<![CDATA[
+    		select z.yyyy 
+		    from
+		    (
+		    		select 2013 as yyyy    union select 2014 as yyyy
+		    		union select CASE WHEN DATE_FORMAT(NOW(),'%Y') > 2014 THEN 2015 ELSE 0 END as yyyy
+					union select CASE WHEN DATE_FORMAT(NOW(),'%Y') > 2015 THEN 2016 ELSE 0 END as yyyy
+			) z
+			where z.yyyy <> 0	
+		]]>				
+	) am 
+   LEFT OUTER JOIN   
+   (
+   
+   			select 
+		        sum(VISIT_COUNT) VISIT_COUNT,
+		        sum(FRONT_VISIT_COUNT) FRONT_VISIT_COUNT,
+		        sum(BACKOFFICE_VISIT_COUNT) BACKOFFICE_VISIT_COUNT,
+		        DATE_FORMAT( VISIT_DATE ,'%Y') yyyy
+			from 
+			    tbl_visitor v
+			 WHERE   
+			 	1=1
+			  	AND DATE_FORMAT( VISIT_DATE ,'%Y') = #{year}
+				GROUP BY DATE_FORMAT( VISIT_DATE ,'%Y')
+	) v 
+   ON v.yyyy = am.yyyy 
+   	 <if test="orderColumn != null">
+	 ORDER BY ${orderColumn} ${orderType} 
+	 </if>
+	 <if test="orderColumn == null">
+	 ORDER BY am.yyyy
+	 </if>
+	 <if test="startRow != null">
+	 limit #{startRow}, #{endRow}
+	 </if>
+	</select>
+	<!-- 연간통계카운트(의미는 없지만.. 쿼리로만 유지보수하기 위해..) -->
+	<select id="visitorYearCount" parameterType="map" resultType="int">
+    	<![CDATA[
+    		select count(*) 
+		    from
+		    (
+		    		select 2013 as yyyy    union select 2014 as yyyy
+		    		union select CASE WHEN DATE_FORMAT(NOW(),'%Y') > 2014 THEN 2015 ELSE 0 END as yyyy
+					union select CASE WHEN DATE_FORMAT(NOW(),'%Y') > 2015 THEN 2016 ELSE 0 END as yyyy
+			) z
+			where z.yyyy <> 0
+			]]>			
+	</select>
+	
+	<!--  일간 방문자 통계 -->
+	<select id="visitorDayStatistics" parameterType="map" resultMap="visitListMap">
+	select 
+        ifnull(VISIT_COUNT,0) VISIT_COUNT,
+        ifnull(FRONT_VISIT_COUNT,0) FRONT_VISIT_COUNT,
+        ifnull(BACKOFFICE_VISIT_COUNT,0) BACKOFFICE_VISIT_COUNT,
+        am.dd
+	from 
+    (
+    	<![CDATA[
+		    select z.dd 
+		    from
+		            (
+		            	select 1 as dd    union select 2 as dd    union select 3 as dd    union select 4 as dd    union select 5 as dd    
+			            union select 6 as dd    union select 7 as dd    union select 8 as dd    union select 9 as dd    union select 10 as dd
+			            union select 11 as dd    union select 12 as dd    union select 13 as dd    union select 14 as dd    union select 15 as dd    
+			            union select 16 as dd    union select 17 as dd    union select 18 as dd    union select 19 as dd    union select 20 as dd
+			            union select 21 as dd    union select 22 as dd    union select 23 as dd    union select 24 as dd    union select 25 as dd    
+			            union select 26 as dd    union select 27 as dd    
+			            union select CASE WHEN DATE_FORMAT(LAST_DAY( concat(#{year} , '-',  #{month} , '-1') ),'%d') > 27 THEN 28 ELSE 0 END as dd
+			            union select CASE WHEN DATE_FORMAT(LAST_DAY( concat(#{year} , '-',  #{month} , '-1') ),'%d') > 28 THEN 29 ELSE 0 END as dd
+			            union select CASE WHEN DATE_FORMAT(LAST_DAY( concat(#{year} , '-', #{month} , '-1') ),'%d') > 29 THEN 30 ELSE 0 END as dd
+			            union select CASE WHEN DATE_FORMAT(LAST_DAY( concat(#{year} , '-',  #{month} , '-1') ),'%d') > 30 THEN 31 ELSE 0 END as dd
+		            ) z
+		      where z.dd <> 0 AND     z.dd between #{schStartDay} and #{schEndDay} ]]>
+    ) am 
+   LEFT OUTER JOIN   
+   (
+			select 
+			        VISIT_DATE, 
+			        sum(VISIT_COUNT) VISIT_COUNT,
+			        sum(FRONT_VISIT_COUNT) FRONT_VISIT_COUNT,
+			        sum(BACKOFFICE_VISIT_COUNT) BACKOFFICE_VISIT_COUNT,
+			        DATE_FORMAT( VISIT_DATE ,'%e') dd
+			from 
+			    tbl_visitor v
+			 WHERE   
+			 	    DATE_FORMAT( VISIT_DATE ,'%Y') = #{year}
+					AND     DATE_FORMAT( VISIT_DATE ,'%c') = #{month} 
+					AND     DATE_FORMAT( VISIT_DATE,'%Y-%c-%e') between CONCAT( #{year} , '-' , #{month} , '-' , #{schStartDay} )  AND CONCAT( #{year} , '-' , #{month} , '-' , #{schEndDay} )
+			GROUP BY VISIT_DATE 
+   ) v 
+   ON v.dd = am.dd 
+    <if test="orderColumn != null">
+		 ORDER BY ${orderColumn} ${orderType} 
+	 </if>
+	 <if test="orderColumn == null">
+		 ORDER BY am.dd
+	 </if>
+	 <if test="startRow != null">
+		 limit #{startRow}, #{endRow}
+	 </if>
+	</select>
+	
+	<!-- 일간통계카운트(의미는 없지만.. 쿼리로만 유지보수하기 위해..) -->
+	<select id="visitorDayCount" parameterType="map" resultType="int">
+		<![CDATA[
+		    select count(*) 
+		    from
+		            (
+		            	select 1 as dd    union select 2 as dd    union select 3 as dd    union select 4 as dd    union select 5 as dd    
+			            union select 6 as dd    union select 7 as dd    union select 8 as dd    union select 9 as dd    union select 10 as dd
+			            union select 11 as dd    union select 12 as dd    union select 13 as dd    union select 14 as dd    union select 15 as dd    
+			            union select 16 as dd    union select 17 as dd    union select 18 as dd    union select 19 as dd    union select 20 as dd
+			            union select 21 as dd    union select 22 as dd    union select 23 as dd    union select 24 as dd    union select 25 as dd    
+			            union select 26 as dd    union select 27 as dd    
+			            union select CASE WHEN DATE_FORMAT(LAST_DAY( concat(#{year} , '-',  #{month} , '-1') ),'%d') > 27 THEN 28 ELSE 0 END as dd
+			            union select CASE WHEN DATE_FORMAT(LAST_DAY( concat(#{year} , '-',  #{month} , '-1') ),'%d') > 28 THEN 29 ELSE 0 END as dd
+			            union select CASE WHEN DATE_FORMAT(LAST_DAY( concat(#{year} , '-', #{month} , '-1') ),'%d') > 29 THEN 30 ELSE 0 END as dd
+			            union select CASE WHEN DATE_FORMAT(LAST_DAY( concat(#{year} , '-',  #{month} , '-1') ),'%d') > 30 THEN 31 ELSE 0 END as dd
+		            ) z
+		      where z.dd <> 0 AND     z.dd between #{schStartDay} and #{schEndDay} ]]>
+	</select>
+	
+	<!-- 월간방문통계 -->
+	<select id="visitorMonthStatistics" parameterType="map" resultMap="visitListMap">
+	select 
+        ifnull(VISIT_COUNT,0) VISIT_COUNT,
+        ifnull(FRONT_VISIT_COUNT,0) FRONT_VISIT_COUNT,
+        ifnull(BACKOFFICE_VISIT_COUNT,0) BACKOFFICE_VISIT_COUNT,
+        am.mm
+	from 
+	    (
+		    select 1 as mm 
+		    union select 2 as mm union select 3 as mm union select 4 as mm union select 5 as mm union select 6 as mm from dual
+		    union select 7 as mm union select 8 as mm union select 9 as mm union select 10 as mm union select 11 as mm union select 12 as mm from dual
+	    ) am 
+	   LEFT OUTER JOIN   
+	   (
+	   		SELECT 
+		        DATE_FORMAT( VISIT_DATE ,'%c') mm,
+		        sum(VISIT_COUNT) VISIT_COUNT,
+		        sum(FRONT_VISIT_COUNT) FRONT_VISIT_COUNT,
+		        sum(BACKOFFICE_VISIT_COUNT) BACKOFFICE_VISIT_COUNT
+	    	FROM tbl_visitor
+	   		WHERE   
+	 			1=1 	
+	    	AND DATE_FORMAT( VISIT_DATE ,'%Y') = #{year}
+    		GROUP BY DATE_FORMAT( VISIT_DATE ,'%Y%m')
+	    ) v 
+	   ON v.mm = am.mm
+	<if test="orderColumn != null">
+		 ORDER BY ${orderColumn} ${orderType} 
+	 </if>
+	 <if test="orderColumn == null">
+		 ORDER BY am.mm
+	 </if>
+	 <if test="startRow != null">
+		 limit #{startRow}, #{endRow}
+	 </if>	   
+	</select>
+	<!-- 월간통계카운트(의미는 없지만.. 쿼리로만 유지보수하기 위해..) -->
+	<select id="visitorMonthCount" parameterType="map" resultType="int">
+	    select count(*) 
+	    from
+	    (
+		    select 1 as mm 
+		    union select 2 as mm union select 3 as mm union select 4 as mm union select 5 as mm union select 6 as mm from dual
+		    union select 7 as mm union select 8 as mm union select 9 as mm union select 10 as mm union select 11 as mm union select 12 as mm from dual
+	    ) a
+	</select>
+	
+	<update id="updateVisitor"  parameterType="Visitor">
+   INSERT INTO tbl_visitor(VISIT_DATE , VISIT_COUNT , FRONT_VISIT_COUNT , BACKOFFICE_VISIT_COUNT)
+		VALUES
+		(
+			#{visitDate},
+			#{visitCount},
+			#{frontVisitCount},
+			#{backofficeVisitCount}
+		)
+	ON DUPLICATE KEY UPDATE 
+	      <if test="visitCount != null">VISIT_COUNT=#{visitCount},</if>
+	      <if test="frontVisitCount != null">FRONT_VISIT_COUNT=#{frontVisitCount},</if>
+	      <if test="backofficeVisitCount != null">BACKOFFICE_VISIT_COUNT=#{backofficeVisitCount},</if>
+	      <if test="visitDate != null">VISIT_DATE=#{visitDate}</if>
+</update>
+</mapper>
